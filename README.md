@@ -1,2 +1,2 @@
 # go_hoard_yourself
- WG themed idle game.
+A WG themed idle game.
