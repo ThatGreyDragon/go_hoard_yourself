@@ -1,4 +1,6 @@
 import '../models/task.dart';
+import '../models/dragon.dart';
+import '../data/foods.dart';
 
 class TaskGather extends Task {
   @override
@@ -8,11 +10,13 @@ class TaskGather extends Task {
   double get timeToComplete => 10.0;
 
   @override
-  void onComplete() {
-    
+  void onComplete(Dragon dragon) {
+    dragon.giveFood(FOOD_BURGER);
   }
 }
 
-List<Task> tasks = [
-  TaskGather(),
+final TaskGather TASK_GATHER = TaskGather();
+
+final List<Task> TASKS = [
+  TASK_GATHER,
 ];

@@ -1,0 +1,25 @@
+<div *ngFor="let task of dragon.unlockedTasks">
+    <div class="card">
+        <div class="card-body">
+            <button
+                type="button"
+                class="btn mb-1"
+                (click)="onTaskSelected(task)"
+                [class.btn-primary]="dragon.workingOn == task"
+                [class.btn-secondary]="dragon.workingOn != task"
+            >
+                {{task.name}}
+            </button>
+            <div class="progress position-relative">
+                <div
+                    class="progress-bar no-animation"
+                    role="progressbar"
+                    style="width: {{task.progressPercent}}%;"
+                ></div>
+                <div class="justify-content-center d-flex position-absolute w-100">
+                    {{task.progressPercentString}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

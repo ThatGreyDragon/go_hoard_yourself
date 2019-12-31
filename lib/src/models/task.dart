@@ -1,16 +1,21 @@
+import '../models/dragon.dart';
+
 abstract class Task {
   String get name;
   double get timeToComplete;
 
   double progress = 0.0;
 
-  void onComplete();
+  void onComplete(Dragon dragon);
 
-  void doWork(double amount) {
+  void doWork(Dragon dragon, double amount) {
     progress += amount;
     while (progress >= timeToComplete) {
       progress -= timeToComplete;
-      onComplete();
+      onComplete(dragon);
     }
   }
+
+  double get progressPercent => progress / timeToComplete * 100;
+  String get progressPercentString => progressPercent.toStringAsFixed(0) + '%';
 }

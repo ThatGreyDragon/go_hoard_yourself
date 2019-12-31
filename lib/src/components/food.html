@@ -1,0 +1,27 @@
+<div class="progress position-relative mb-2">
+    <div
+        class="progress-bar no-animation"
+        role="progressbar"
+        style="width: {{dragon.eatingProgressPercent}}%;"
+    ></div>
+    <div class="justify-content-center d-flex position-absolute w-100">
+        {{dragon.eatingProgressPercentString}}
+    </div>
+</div>
+
+<div *ngFor="let entry of dragon.inventory.entries; trackBy: trackByInvetoryLength">
+    <div class="card">
+        <div class="card-body">
+            <button
+                type="button"
+                class="btn"
+                [class.btn-primary]="beingEaten(entry.key)"
+                [class.btn-secondary]="!beingEaten(entry.key)"
+                (click)="onFoodSelected(entry.key)"
+            >
+                {{entry.key.name}}
+            </button>
+            {{entry.value}}
+        </div>
+    </div>
+</div>

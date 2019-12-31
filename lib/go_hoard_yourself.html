@@ -1,7 +1,30 @@
 
-<div class="container-fluid">
-    <div class="panel panel-default"><div class="panel-body">
-        <h1 class="col-xs-6">Go Hoard Yourself</h1>
-        <dragon-info [dragon]="dragon" class="col-xs-6 text-right"></dragon-info>
-    </div></div>
+<div class="container-fluid d-flex flex-column 100-vh">
+    <nav class="row navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand">Go Hoard Yourself</a>
+        <div class="collapse navbar-collapse"></div>
+        <button type="button" class="btn material-icons" style="padding: 0px; font-size: xx-large;">
+            settings
+        </button>
+    </nav>
+
+    <div class="row col">
+        <div class="card col">
+            <div class="card-header">Tasks</div>
+            <tasks [dragon]="dragon" class="card-body"></tasks>
+        </div>
+        <div class="col">
+            <div class="card h-50">
+                <div class="card-header">Status</div>
+                <dragon-info [dragon]="dragon" class="card-body"></dragon-info>
+            </div>
+            <div class="h-50">
+                <canvas class="w-100 h-100"></canvas>
+            </div>
+        </div>
+        <div class="card col">
+            <div class="card-header">Food</div>
+            <food [dragon]="dragon" class="card-body"></food>
+        </div>
+    </div>
 </div>

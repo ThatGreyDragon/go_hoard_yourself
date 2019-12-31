@@ -1,3 +1,4 @@
+import '../data/tasks.dart';
 import '../models/food.dart';
 import '../models/task.dart';
 
@@ -12,11 +13,12 @@ class StomachFilling {
 
 class Dragon {
   String name;
-  Map<Food,int> food;
-  Set<StomachFilling> stomach;
+  Map<Food,int> inventory = {};
+  Set<StomachFilling> stomach = {};
   double stomachCapacity, metabolism, eatSpeed, weight, eatingProgress;
   Task workingOn;
   Food eating;
+  List<Task> unlockedTasks = [];
 
   Dragon(this.name) {
     stomachCapacity = 10.0;
@@ -24,13 +26,16 @@ class Dragon {
     eatSpeed = 1.0;
     weight = 100.0;
     eatingProgress = 0.0;
+    unlockedTasks = [TASK_GATHER];
   }
 
   double get workSpeed => 0.1;
 
   void onTick() {
     // do work
-    workingOn?.doWork(workSpeed);
+    if (eating == null) {
+      workingOn?.doWork(this, workSpeed);
+    }
 
     // eat food
     if (eating != null) {
@@ -43,11 +48,16 @@ class Dragon {
             break;
           }
         }
-        if (exisitingFilling == null) {
+        if (exisitingFilling != null) {
           exisitingFilling.amount += eating.size;
         } else {
           stomach.add(StomachFilling(eating, eating.size));
         }
+        var remaining = inventory.update(eating, (int i) => i-1);
+        if (remaining <= 0) {
+          inventory.remove(eating);
+        }
+        eatingProgress = 0.0;
         eating = null;
       }
     }
@@ -64,4 +74,13 @@ class Dragon {
     }
     stomach.removeAll(toDelete);
   }
+
+  void giveFood(Food food, [int amount = 1]) {
+    inventory.putIfAbsent(food, () => 0);
+    inventory[food] += amount;
+  }
+
+  double get eatingProgressPercent => (eatingProgress / (eating?.eatTime ?? 1) * 100);
+  String get eatingProgressPercentString => eatingProgressPercent.toStringAsFixed(0) + '%';
+  double get stomachSpaceInUse => stomach.fold(0, (total, filling) => total + filling.amount);
 }

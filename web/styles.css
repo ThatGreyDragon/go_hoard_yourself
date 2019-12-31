@@ -1,0 +1,11 @@
+.container-fluid {
+    height: 100vh;
+}
+
+.no-animation {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
