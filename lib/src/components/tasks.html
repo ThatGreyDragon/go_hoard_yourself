@@ -1,23 +1,25 @@
 <div *ngFor="let task of dragon.unlockedTasks" #pane (init)="enableTooltips(pane)">
-    <div class="card" data-toggle="tooltip" [attr.title]="task.desc">
-        <div class="card-body">
-            <button
-                type="button"
-                class="btn mb-1"
-                (click)="onTaskSelected(task)"
-                [class.btn-primary]="dragon.workingOn == task"
-                [class.btn-secondary]="dragon.workingOn != task"
-            >
-                {{task.name}}
-            </button>
-            <div class="progress position-relative">
-                <div
-                    class="progress-bar no-animation"
-                    role="progressbar"
-                    style="width: {{task.progressPercent | percent: '1.0-12'}};"
-                ></div>
-                <div class="justify-content-center d-flex position-absolute w-100">
-                    {{task.progressPercent | percent}}
+    <div class="card mb-2" data-toggle="tooltip" [attr.title]="task.desc">
+        <div class="container">
+            <div class="row card-body">
+                <button
+                    type="button"
+                    class="btn col"
+                    (click)="onTaskSelected(task)"
+                    [class.btn-primary]="dragon.workingOn == task"
+                    [class.btn-secondary]="dragon.workingOn != task"
+                >
+                    {{task.name}}
+                </button>
+                <div class="progress position-relative col p-0 m-1" style="height: 36px;">
+                    <div
+                        class="progress-bar no-animation"
+                        role="progressbar"
+                        style="width: {{task.progressPercent | percent: '1.0-12'}};"
+                    ></div>
+                    <div class="justify-content-center d-flex position-absolute w-100 h-100" style="line-height: 300%;">
+                        {{task.progressPercent | percent}}
+                    </div>
                 </div>
             </div>
         </div>
