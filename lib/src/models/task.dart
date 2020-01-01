@@ -16,6 +16,5 @@ abstract class Task {
     }
   }
 
-  double get progressPercent => progress / timeToComplete * 100;
-  String get progressPercentString => progressPercent.toStringAsFixed(0) + '%';
+  double get progressPercent => progress / timeToComplete;
 }

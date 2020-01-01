@@ -2,10 +2,10 @@
     <div
         class="progress-bar no-animation"
         role="progressbar"
-        style="width: {{dragon.eatingProgressPercent}}%;"
+        style="width: {{dragon.eatingProgressPercent | percent: '1.0-12'}};"
     ></div>
     <div class="justify-content-center d-flex position-absolute w-100">
-        {{dragon.eatingProgressPercentString}}
+        {{dragon.eatingProgressPercent | percent}}
     </div>
 </div>
 

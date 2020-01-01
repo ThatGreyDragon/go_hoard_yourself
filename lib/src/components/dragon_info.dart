@@ -6,6 +6,7 @@ import 'package:angular/angular.dart';
   selector: 'dragon-info',
   templateUrl: 'dragon_info.html',
   directives: [coreDirectives],
+  pipes: [commonPipes],
 )
 class DragonInfoComponent {
   @Input()

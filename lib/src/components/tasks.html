@@ -14,10 +14,10 @@
                 <div
                     class="progress-bar no-animation"
                     role="progressbar"
-                    style="width: {{task.progressPercent}}%;"
+                    style="width: {{task.progressPercent | percent: '1.0-12'}};"
                 ></div>
                 <div class="justify-content-center d-flex position-absolute w-100">
-                    {{task.progressPercentString}}
+                    {{task.progressPercent | percent}}
                 </div>
             </div>
         </div>

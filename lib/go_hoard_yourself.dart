@@ -14,6 +14,7 @@ final int TICKS_PER_SECOND = 30;
   styleUrls: ['go_hoard_yourself.css'],
   templateUrl: 'go_hoard_yourself.html',
   directives: [coreDirectives, DragonInfoComponent, TasksComponent, FoodComponent],
+  pipes: [commonPipes],
 )
 class GoHoardYourself {
   Dragon dragon = Dragon('Testerino');

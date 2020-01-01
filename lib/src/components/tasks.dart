@@ -8,6 +8,7 @@ import 'package:angular/angular.dart';
   selector: 'tasks',
   templateUrl: 'tasks.html',
   directives: [coreDirectives],
+  pipes: [commonPipes],
 )
 class TasksComponent {
   @Input()

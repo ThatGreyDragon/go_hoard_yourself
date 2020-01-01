@@ -6,6 +6,7 @@ import 'package:go_hoard_yourself/src/models/food.dart';
   selector: 'food',
   templateUrl: 'food.html',
   directives: [coreDirectives],
+  pipes: [commonPipes],
 )
 class FoodComponent {
   @Input()

@@ -80,7 +80,6 @@ class Dragon {
     inventory[food] += amount;
   }
 
-  double get eatingProgressPercent => (eatingProgress / (eating?.eatTime ?? 1) * 100);
-  String get eatingProgressPercentString => eatingProgressPercent.toStringAsFixed(0) + '%';
+  double get eatingProgressPercent => eatingProgress / (eating?.eatTime ?? 1);
   double get stomachSpaceInUse => stomach.fold(0, (total, filling) => total + filling.amount);
 }
