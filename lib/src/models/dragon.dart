@@ -85,9 +85,4 @@ class Dragon {
 
   double get eatingProgressPercent => eatingProgress / (eating?.eatTime ?? 1);
   double get stomachSpaceInUse => stomach.fold(0, (total, filling) => total + filling.amount);
-
-  void notify(String message, [LogType type = LogType.INFO]) {
-    var entry = LogEntry(message, type);
-    log.add(entry);
-  }
 }

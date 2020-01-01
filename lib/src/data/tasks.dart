@@ -1,3 +1,5 @@
+import 'package:go_hoard_yourself/src/models/log.dart';
+
 import '../models/task.dart';
 import '../models/dragon.dart';
 import '../data/foods.dart';
@@ -10,11 +12,15 @@ class TaskGather extends Task {
   String get desc => 'Forage and hunt for something to eat!';
 
   @override
-  double get timeToComplete => 10.0;
+  double get timeToComplete => 5.0;
 
   @override
   void onComplete(Dragon dragon) {
     dragon.giveFood(FOOD_BURGER);
+
+    if (dragon.workingOn == this) {
+      dragon.log.add(LogEntry('You manage to scrounge up... A cheeseburger? Welp. Time to dig in!'));
+    }
   }
 }
 
