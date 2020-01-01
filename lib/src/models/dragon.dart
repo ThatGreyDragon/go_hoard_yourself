@@ -34,7 +34,7 @@ class Dragon {
 
   Dragon(this.name) {
     stomachCapacity = 10.0;
-    metabolism = 1.0;
+    metabolism = 0.1;
     eatSpeed = 1.0;
     weight = 100.0;
     eatingProgress = 0.0;
@@ -82,6 +82,7 @@ class Dragon {
 
   double get eatingProgressPercent => eatingProgress / (eating?.eatTime ?? 1);
   double get stomachSpaceInUse => stomach.fold(0, (total, filling) => total + filling.amount);
+  double get stomachFullPercent => stomachSpaceInUse / stomachCapacity;
 
   int get kobolds => inventory[FOOD_KOBOLD] ?? 0;
   int get koboldsInUse => unlockedTasks.fold(0, (total, task) => total + task.koboldsAssigned);

@@ -1,3 +1,3 @@
 <div>Name: {{dragon.name}}</div>
-<div>Weight: {{dragon.weight}} lbs.</div>
-<div>Stomach capacity: {{dragon.stomachSpaceInUse}} / {{dragon.stomachCapacity}}</div>
+<div>Weight: {{dragon.weight | number: '1.0-0'}} lbs.</div>
+<div>Stomach: <span [style.color]="stomachFullnessColor">{{stomachFullnessDesc}}</span></div>

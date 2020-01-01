@@ -2,6 +2,7 @@ import 'package:go_hoard_yourself/src/components/common_component.dart';
 import 'package:go_hoard_yourself/src/models/dragon.dart';
 import 'package:angular/angular.dart';
 import 'package:go_hoard_yourself/src/models/food.dart';
+import 'package:go_hoard_yourself/src/models/log.dart';
 
 @Component(
   selector: 'food',
@@ -24,7 +25,11 @@ class FoodComponent extends CommonComponent {
     if (dragon.eating == food) {
       dragon.eating = null;
     } else {
-      dragon.eating = food;
+      if (dragon.stomachFullPercent > 1) {
+        dragon.log.add(LogEntry('You\'re overfull! You can\'t eat another bite!', LogType.BAD));
+      } else {
+        dragon.eating = food;
+      }
     }
   }
 }
