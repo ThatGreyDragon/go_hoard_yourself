@@ -5,12 +5,8 @@ import 'dart:async';
 class CommonComponent implements angular.AfterContentChecked {
   @override
   void ngAfterContentChecked() {
-    js.context.callMethod('eval', ['''
-      \$(function () {
-        \$('[data-toggle="tooltip"]').tooltip()
-        \$('[data-toggle="popover"]').popover()
-      })
-    ''']);
+    js.context.callMethod(r'$', ['[data-toggle="tooltip"]']).callMethod('tooltip');
+    js.context.callMethod(r'$', ['[data-toggle="popover"]']).callMethod('popover');
   }
 }
 

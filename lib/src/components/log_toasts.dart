@@ -31,13 +31,10 @@ class LogToastsComponent extends CommonComponent {
 
   void onInit(html.DivElement toastPanel) {
     html.MutationObserver((mutations, observer) {
-      for (var child in List<html.Element>.from(toastPanel.children)) {
-        if (child.children.isEmpty) {
-          child.remove();
-        }
-      }
       if (toastPanel.children.length > MAX_TOASTS_ON_SCREEN) {
-        js.context.callMethod(r'$', ['.alert']).callMethod('slice', [0, -MAX_TOASTS_ON_SCREEN]).callMethod('alert', ['close']);
+        js.context.callMethod(r'$', ['.alert', toastPanel])
+          .callMethod('slice', [0, -MAX_TOASTS_ON_SCREEN])
+          .callMethod('alert', ['close']);
       }
     }).observe(toastPanel, childList: true);
   }
