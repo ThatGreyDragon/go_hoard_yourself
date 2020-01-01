@@ -22,4 +22,16 @@ class TasksComponent extends CommonComponent {
       dragon.workingOn = task;
     }
   }
+
+  void decreaseAllocation(Task task) {
+    if (task.koboldsAssigned > 0) {
+      task.koboldsAssigned--;
+    }
+  }
+
+  void increaseAllocation(Task task) {
+    if (dragon.koboldsInUse < dragon.kobolds) {
+      task.koboldsAssigned++;
+    }
+  }
 }

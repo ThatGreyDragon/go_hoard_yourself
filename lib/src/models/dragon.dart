@@ -7,6 +7,8 @@ import '../models/task.dart';
 
 import 'dart:math';
 
+final double BASE_KOBOLD_WORK = 0.01;
+
 class StomachFilling {
   Food food;
   double amount;
@@ -45,6 +47,9 @@ class Dragon {
     // do work
     if (eating == null) {
       workingOn?.doWork(this, workSpeed);
+    }
+    for (var task in unlockedTasks) {
+      task.doWork(this, BASE_KOBOLD_WORK * task.koboldsAssigned);
     }
 
     // eat food

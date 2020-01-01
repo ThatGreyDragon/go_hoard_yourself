@@ -1,7 +1,7 @@
 <div *ngFor="let task of dragon.unlockedTasks" #pane (init)="enableTooltips(pane)">
     <div class="card mb-2" data-toggle="tooltip" [attr.title]="task.desc">
-        <div class="container">
-            <div class="row card-body">
+        <div class="container card-body">
+            <div class="row">
                 <button
                     type="button"
                     class="btn col"
@@ -18,9 +18,22 @@
                         style="width: {{task.progressPercent | percent: '1.0-12'}};"
                     ></div>
                     <div class="justify-content-center d-flex position-absolute w-100 h-100" style="line-height: 300%;">
-                        {{task.progressPercent | percent}}
+                        {{task.progressPercent | percent: '1.0-0'}}
                     </div>
                 </div>
+            </div>
+            <div class="row mt-2" *ngIf="dragon.koboldsUnlocked">
+                <button
+                    class="btn btn-secondary btn-sm col"
+                    (click)="decreaseAllocation(task)"
+                    [attr.disabled]="task.koboldsAssigned > 0 ? null : 1"
+                ><i class="fa fa-minus"></i></button>
+                <div class="col"><i class="fa fa-users"></i> {{task.koboldsAssigned}}</div>
+                <button
+                    class="btn btn-secondary btn-sm col"
+                    (click)="increaseAllocation(task)"
+                    [attr.disabled]="dragon.koboldsInUse < dragon.kobolds ? null : 1"
+                ><i class="fa fa-plus"></i></button>
             </div>
         </div>
     </div>
