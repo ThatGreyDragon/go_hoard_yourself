@@ -4,23 +4,23 @@ import 'package:angular/angular.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
 
 @Component(
-  selector: 'log',
-  templateUrl: 'log.html',
+  selector: 'log-toasts',
+  templateUrl: 'log_toasts.html',
   directives: [coreDirectives],
   pipes: [commonPipes],
 )
-class LogComponent extends CommonComponent {
+class LogToastsComponent extends CommonComponent {
   @Input()
   Dragon dragon;
 
   String logColor(LogEntry entry) {
     switch (entry.type) {
       case LogType.INFO:
-        return 'black';
+        return 'alert-secondary';
       case LogType.GOOD:
-        return 'green';
+        return 'alert-success';
       case LogType.BAD:
-        return 'red';
+        return 'alert-danger';
     }
   }
 }
