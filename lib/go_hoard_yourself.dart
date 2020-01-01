@@ -1,3 +1,6 @@
+import 'dart:html' as html;
+
+import 'package:go_hoard_yourself/src/components/common_component.dart';
 import 'package:go_hoard_yourself/src/components/food.dart';
 import 'package:go_hoard_yourself/src/components/log.dart';
 import 'package:go_hoard_yourself/src/components/log_toasts.dart';
@@ -17,6 +20,7 @@ final int TICKS_PER_SECOND = 30;
   templateUrl: 'go_hoard_yourself.html',
   directives: [
     coreDirectives,
+    InitDirective,
     DragonInfoComponent,
     TasksComponent,
     FoodComponent,
@@ -25,7 +29,7 @@ final int TICKS_PER_SECOND = 30;
   ],
   pipes: [commonPipes],
 )
-class GoHoardYourself {
+class GoHoardYourself extends CommonComponent {
   Dragon dragon = Dragon('Testerino');
 
   GoHoardYourself() {

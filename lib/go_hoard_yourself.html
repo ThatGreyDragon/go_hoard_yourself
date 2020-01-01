@@ -36,7 +36,7 @@
                         >Log</a></li>
                     </ul>
                 </div>
-                <div class="tab-content card-body">
+                <div class="tab-content card-body overflow-auto" #logPane (init)="enableScrollLock(logPane)">
                     <div class="tab-pane fade show active" id="status" role="tabpanel">
                         <dragon-info [dragon]="dragon"></dragon-info>
                     </div>

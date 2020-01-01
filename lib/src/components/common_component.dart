@@ -18,6 +18,17 @@ class CommonComponent {
       _enableTooltips(e);
     }).observe(e.parent, childList: true);
   }
+
+  void _lockScrolling(html.Element e) {
+    e.scrollTop = e.scrollHeight;
+  }
+
+  void enableScrollLock(html.Element e) {
+    _lockScrolling(e);
+    html.MutationObserver((children, observer) {
+      _lockScrolling(e);
+    }).observe(e.parent, childList: true, characterData: true, subtree: true);
+  }
 }
 
 @angular.Directive(selector: '[init]')
