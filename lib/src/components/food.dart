@@ -6,7 +6,7 @@ import 'package:go_hoard_yourself/src/models/food.dart';
 @Component(
   selector: 'food',
   templateUrl: 'food.html',
-  directives: [coreDirectives],
+  directives: [coreDirectives, InitDirective],
   pipes: [commonPipes],
 )
 class FoodComponent extends CommonComponent {

@@ -8,7 +8,7 @@ import 'package:angular/angular.dart';
 @Component(
   selector: 'tasks',
   templateUrl: 'tasks.html',
-  directives: [coreDirectives],
+  directives: [coreDirectives, InitDirective],
   pipes: [commonPipes],
 )
 class TasksComponent extends CommonComponent {

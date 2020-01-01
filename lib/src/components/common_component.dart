@@ -1,12 +1,19 @@
 import 'package:angular/angular.dart' as angular;
 import 'dart:js' as js;
-import 'dart:async';
+import 'dart:async' as streams;
+import 'dart:html' as html;
 
-class CommonComponent implements angular.AfterContentChecked {
-  @override
-  void ngAfterContentChecked() {
-    js.context.callMethod(r'$', ['[data-toggle="tooltip"]']).callMethod('tooltip');
-    js.context.callMethod(r'$', ['[data-toggle="popover"]']).callMethod('popover');
+class CommonComponent {
+  void _enableTooltips(html.Element e) {
+    js.context.callMethod(r'$', ['[data-toggle="tooltip"]', e]).callMethod('tooltip');
+    js.context.callMethod(r'$', ['[data-toggle="popover"]', e]).callMethod('popover');
+  }
+
+  void enableToolips(html.Element e) {
+    _enableTooltips(e);
+    html.MutationObserver((event, observer) {
+      _enableTooltips(e);
+    }).observe(e, childList: true);
   }
 }
 
@@ -16,10 +23,10 @@ class InitDirective implements angular.AfterContentInit {
     stream = streamController.stream;
   }
 
-  StreamController streamController = StreamController();
+  streams.StreamController streamController = streams.StreamController();
 
   @angular.Output('init')
-  Stream stream;
+  streams.Stream stream;
 
   @override
   void ngAfterContentInit() {

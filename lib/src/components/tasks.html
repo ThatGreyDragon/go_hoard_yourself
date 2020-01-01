@@ -1,4 +1,4 @@
-<div *ngFor="let task of dragon.unlockedTasks">
+<div *ngFor="let task of dragon.unlockedTasks" #pane (init)="enableToolips(pane)">
     <div class="card" data-toggle="tooltip" [attr.title]="task.desc">
         <div class="card-body">
             <button
