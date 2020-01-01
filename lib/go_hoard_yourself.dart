@@ -1,4 +1,5 @@
 import 'package:go_hoard_yourself/src/components/food.dart';
+import 'package:go_hoard_yourself/src/components/log.dart';
 import 'package:go_hoard_yourself/src/components/tasks.dart';
 import 'package:go_hoard_yourself/src/components/dragon_info.dart';
 import 'package:go_hoard_yourself/src/models/dragon.dart';
@@ -13,7 +14,13 @@ final int TICKS_PER_SECOND = 30;
   selector: 'go-hoard-yourself',
   styleUrls: ['go_hoard_yourself.css'],
   templateUrl: 'go_hoard_yourself.html',
-  directives: [coreDirectives, DragonInfoComponent, TasksComponent, FoodComponent],
+  directives: [
+    coreDirectives,
+    DragonInfoComponent,
+    TasksComponent,
+    FoodComponent,
+    LogComponent,
+  ],
   pipes: [commonPipes],
 )
 class GoHoardYourself {

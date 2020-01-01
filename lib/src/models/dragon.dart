@@ -1,3 +1,5 @@
+import 'package:go_hoard_yourself/src/models/log.dart';
+
 import '../data/tasks.dart';
 import '../models/food.dart';
 import '../models/task.dart';
@@ -19,6 +21,7 @@ class Dragon {
   Task workingOn;
   Food eating;
   List<Task> unlockedTasks = [];
+  List<LogEntry> log = [];
 
   Dragon(this.name) {
     stomachCapacity = 10.0;

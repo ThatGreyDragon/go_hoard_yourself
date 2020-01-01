@@ -1,3 +1,5 @@
+import 'package:go_hoard_yourself/src/models/log.dart';
+
 import '../models/dragon.dart';
 
 abstract class Task {
@@ -14,6 +16,7 @@ abstract class Task {
     while (progress >= timeToComplete) {
       progress -= timeToComplete;
       onComplete(dragon);
+      dragon.log.add(LogEntry("You gathered."));
     }
   }
 
