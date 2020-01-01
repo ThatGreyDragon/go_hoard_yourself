@@ -31,7 +31,6 @@ class LogToastsComponent extends CommonComponent {
 
   void onInit(html.DivElement toastPanel) {
     html.MutationObserver((mutations, observer) {
-      print('chuldren: ${toastPanel.children.length}');
       for (var child in List<html.Element>.from(toastPanel.children)) {
         if (child.children.isEmpty) {
           child.remove();
