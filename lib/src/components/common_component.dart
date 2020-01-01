@@ -5,15 +5,18 @@ import 'dart:html' as html;
 
 class CommonComponent {
   void _enableTooltips(html.Element e) {
+    js.context.callMethod(r'$', ['[data-toggle="tooltip"]', e]).callMethod('tooltip', ['hide']);
+    js.context.callMethod(r'$', ['[data-toggle="popover"]', e]).callMethod('popover', ['hide']);
+
     js.context.callMethod(r'$', ['[data-toggle="tooltip"]', e]).callMethod('tooltip');
     js.context.callMethod(r'$', ['[data-toggle="popover"]', e]).callMethod('popover');
   }
 
   void enableToolips(html.Element e) {
     _enableTooltips(e);
-    html.MutationObserver((event, observer) {
+    html.MutationObserver((children, observer) {
       _enableTooltips(e);
-    }).observe(e, childList: true);
+    }).observe(e.parent, childList: true);
   }
 }
 
