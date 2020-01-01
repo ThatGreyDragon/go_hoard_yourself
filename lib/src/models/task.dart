@@ -6,6 +6,7 @@ abstract class Task {
   double get timeToComplete;
 
   double progress = 0.0;
+  int koboldsAssigned = 0;
 
   void onComplete(Dragon dragon);
 

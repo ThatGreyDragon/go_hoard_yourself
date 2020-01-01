@@ -1,3 +1,4 @@
+import 'package:go_hoard_yourself/src/data/foods.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
 
 import '../data/tasks.dart';
@@ -22,6 +23,12 @@ class Dragon {
   Food eating;
   List<Task> unlockedTasks = [];
   List<LogEntry> log = [];
+  int gold = 0;
+  int sciencePoints = 0;
+
+  bool koboldsUnlocked = false;
+  bool goldUnlocked = false;
+  bool scienceUnlocked = false;
 
   Dragon(this.name) {
     stomachCapacity = 10.0;
@@ -29,7 +36,7 @@ class Dragon {
     eatSpeed = 1.0;
     weight = 100.0;
     eatingProgress = 0.0;
-    unlockedTasks = [TASK_GATHER];
+    unlockedTasks = [TASK_GATHER, TASK_EXPLORE_CAVE];
   }
 
   double get workSpeed => 0.1;
@@ -44,22 +51,7 @@ class Dragon {
     if (eating != null) {
       eatingProgress += eatSpeed;
       if (eatingProgress >= eating.eatTime) {
-        StomachFilling exisitingFilling;
-        for (var filling in stomach) {
-          if (filling.food == eating) {
-            exisitingFilling = filling;
-            break;
-          }
-        }
-        if (exisitingFilling != null) {
-          exisitingFilling.amount += eating.size;
-        } else {
-          stomach.add(StomachFilling(eating, eating.size));
-        }
-        var remaining = inventory.update(eating, (int i) => i-1);
-        if (remaining <= 0) {
-          inventory.remove(eating);
-        }
+        eating.onEat(this);
         eatingProgress = 0.0;
         eating = null;
       }
@@ -85,4 +77,29 @@ class Dragon {
 
   double get eatingProgressPercent => eatingProgress / (eating?.eatTime ?? 1);
   double get stomachSpaceInUse => stomach.fold(0, (total, filling) => total + filling.amount);
+
+  int get kobolds => inventory[FOOD_KOBOLD] ?? 0;
+  int get koboldsInUse => unlockedTasks.fold(0, (total, task) => total + task.koboldsAssigned);
+
+  void fillStomach(Food food) {
+    StomachFilling exisitingFilling;
+    for (var filling in stomach) {
+      if (filling.food == food) {
+        exisitingFilling = filling;
+        break;
+      }
+    }
+    if (exisitingFilling != null) {
+      exisitingFilling.amount += food.size;
+    } else {
+      stomach.add(StomachFilling(food, food.size));
+    }
+  }
+
+  void takeFood(Food food, [int amount = 1]) {
+    var remaining = inventory.update(food, (int i) => i - amount);
+    if (remaining <= 0) {
+      inventory.remove(food);
+    }
+  }
 }

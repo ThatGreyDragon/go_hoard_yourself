@@ -12,7 +12,7 @@ class CommonComponent {
     js.context.callMethod(r'$', ['[data-toggle="popover"]', e]).callMethod('popover');
   }
 
-  void enableToolips(html.Element e) {
+  void enableTooltips(html.Element e) {
     _enableTooltips(e);
     html.MutationObserver((children, observer) {
       _enableTooltips(e);

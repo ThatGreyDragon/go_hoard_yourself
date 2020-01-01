@@ -24,8 +24,31 @@ class TaskGather extends Task {
   }
 }
 
+class TaskExploreCave extends Task {
+  @override
+  String get name => 'Explore Cave';
+
+  @override
+  String get desc => 'Maybe something good to eat is in there?';
+
+  @override
+  double get timeToComplete => 5.0;
+
+  @override
+  void onComplete(Dragon dragon) {
+    dragon.giveFood(FOOD_KOBOLD);
+    dragon.koboldsUnlocked = true;
+
+    if (dragon.workingOn == this) {
+      dragon.log.add(LogEntry('You find a kobold! They quickly pledge allegiance to you. Sweet!'));
+    }
+  }
+}
+
 final TaskGather TASK_GATHER = TaskGather();
+final TaskExploreCave TASK_EXPLORE_CAVE = TaskExploreCave();
 
 final List<Task> TASKS = [
   TASK_GATHER,
+  TASK_EXPLORE_CAVE,
 ];

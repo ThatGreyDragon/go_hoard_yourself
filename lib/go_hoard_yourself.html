@@ -1,11 +1,18 @@
 
 <div class="container-fluid d-flex flex-column 100-vh">
-    <nav class="row navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand">Go Hoard Yourself</a>
-        <div class="collapse navbar-collapse"></div>
-        <button type="button" class="btn material-icons" style="padding: 0px; font-size: xx-large;">
-            settings
-        </button>
+    <nav class="row navbar navbar-expand-lg navbar-light bg-light" #navbar (init)="enableTooltips(navbar)">
+        <div class="navbar-brand mb-0 h1">Go Hoard Yourself</div>
+        <div class="navbar-text" *ngIf="dragon.koboldsUnlocked" data-toggle="tooltip" title="Kobolds Owned">
+            <i class="fa fa-users"></i> {{dragon.kobolds}}
+        </div>
+        <div class="navbar-text" *ngIf="dragon.goldUnlocked">
+            <i class="fa fa-gem"></i> {{dragon.gold}}
+        </div>
+        <div class="navbar-text" *ngIf="dragon.scienceUnlocked">
+            <i class="fa fa-flask"></i> {{dragon.sciencePoints}}
+        </div>
+        <div class="collapse navbar-collapse" id="resourcesBanner"></div>
+        <button type="button" class="btn fa fa-cog p-0" style="font-size: x-large;"></button>
     </nav>
 
     <div class="row col">
