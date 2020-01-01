@@ -1,13 +1,12 @@
 import 'package:go_hoard_yourself/src/data/foods.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
+import 'package:go_hoard_yourself/src/models/stat.dart';
 
 import '../data/tasks.dart';
 import '../models/food.dart';
 import '../models/task.dart';
 
 import 'dart:math';
-
-final double BASE_KOBOLD_WORK = 0.01;
 
 class StomachFilling {
   Food food;
@@ -20,10 +19,16 @@ class Dragon {
   String name;
   Map<Food,int> inventory = {};
   Set<StomachFilling> stomach = {};
-  double stomachCapacity, metabolism, eatSpeed, weight, eatingProgress;
+  Stat stomachCapacity = Stat(10.0);
+  Stat metabolism = Stat(0.1);
+  Stat eatSpeed = Stat(1.0);
+  Stat workSpeed = Stat(0.1);
+  Stat koboldWorkSpeed = Stat(0.01);
+  double weight = 100.0;
+  double eatingProgress = 0.0;
   Task workingOn;
   Food eating;
-  List<Task> unlockedTasks = [];
+  List<Task> unlockedTasks = TASKS;
   List<LogEntry> log = [];
   int gold = 0;
   int sciencePoints = 0;
@@ -33,28 +38,22 @@ class Dragon {
   bool scienceUnlocked = false;
 
   Dragon(this.name) {
-    stomachCapacity = 10.0;
-    metabolism = 0.1;
-    eatSpeed = 1.0;
-    weight = 100.0;
-    eatingProgress = 0.0;
-    unlockedTasks = [TASK_GATHER, TASK_EXPLORE_CAVE];
+    metabolism.specialMods.add((value) => overfull ? value/2 : value);
+    workSpeed.specialMods.add((value) => overfull ? value/2 : value);
   }
-
-  double get workSpeed => 0.1;
 
   void onTick() {
     // do work
     if (eating == null) {
-      workingOn?.doWork(this, workSpeed);
+      workingOn?.doWork(this, workSpeed.value);
     }
     for (var task in unlockedTasks) {
-      task.doWork(this, BASE_KOBOLD_WORK * task.koboldsAssigned);
+      task.doWork(this, koboldWorkSpeed.value * task.koboldsAssigned);
     }
 
     // eat food
     if (eating != null) {
-      eatingProgress += eatSpeed;
+      eatingProgress += eatSpeed.value;
       if (eatingProgress >= eating.eatTime) {
         eating.onEat(this);
         eatingProgress = 0.0;
@@ -65,7 +64,7 @@ class Dragon {
     // digest food
     var toDelete = <StomachFilling>{}; 
     for (var filling in stomach) {
-      var amount = min(metabolism * filling.food.digestionRate, filling.amount);
+      var amount = min(metabolism.value * filling.food.digestionRate, filling.amount);
       filling.amount -= amount;
       if (filling.amount <= 0) {
         toDelete.add(filling);
@@ -82,7 +81,8 @@ class Dragon {
 
   double get eatingProgressPercent => eatingProgress / (eating?.eatTime ?? 1);
   double get stomachSpaceInUse => stomach.fold(0, (total, filling) => total + filling.amount);
-  double get stomachFullPercent => stomachSpaceInUse / stomachCapacity;
+  double get stomachFullPercent => stomachSpaceInUse / stomachCapacity.value;
+  bool get overfull => stomachFullPercent > 1;
 
   int get kobolds => inventory[FOOD_KOBOLD] ?? 0;
   int get koboldsInUse => unlockedTasks.fold(0, (total, task) => total + task.koboldsAssigned);
