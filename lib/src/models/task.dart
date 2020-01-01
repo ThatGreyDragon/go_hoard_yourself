@@ -2,6 +2,7 @@ import '../models/dragon.dart';
 
 abstract class Task {
   String get name;
+  String get desc;
   double get timeToComplete;
 
   double progress = 0.0;

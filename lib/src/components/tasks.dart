@@ -1,3 +1,4 @@
+import 'package:go_hoard_yourself/src/components/common_component.dart';
 import 'package:go_hoard_yourself/src/models/task.dart';
 
 import '../models/dragon.dart';
@@ -10,7 +11,7 @@ import 'package:angular/angular.dart';
   directives: [coreDirectives],
   pipes: [commonPipes],
 )
-class TasksComponent {
+class TasksComponent extends CommonComponent {
   @Input()
   Dragon dragon;
 

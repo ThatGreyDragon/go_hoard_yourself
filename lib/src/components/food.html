@@ -10,7 +10,7 @@
 </div>
 
 <div *ngFor="let entry of dragon.inventory.entries; trackBy: trackByInvetoryLength">
-    <div class="card">
+    <div class="card" data-toggle="tooltip" [attr.title]="entry.key.desc">
         <div class="card-body">
             <button
                 type="button"

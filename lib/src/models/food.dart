@@ -1,5 +1,6 @@
 abstract class Food {
   String get name;
+  String get desc;
   double get eatTime;
   double get size;
   double get fatRatio;
@@ -8,10 +9,10 @@ abstract class Food {
 
 class BasicFood extends Food {
   @override
-  String name;
+  String name, desc;
 
   @override
   double eatTime, size, fatRatio, digestionRate;
 
-  BasicFood({this.name, this.eatTime, this.size, this.fatRatio, this.digestionRate});
+  BasicFood({this.name, this.desc, this.eatTime, this.size, this.fatRatio, this.digestionRate});
 }

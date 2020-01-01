@@ -7,6 +7,9 @@ class TaskGather extends Task {
   String get name => 'Gather';
 
   @override
+  String get desc => 'Forage and hunt for something to eat!';
+
+  @override
   double get timeToComplete => 10.0;
 
   @override

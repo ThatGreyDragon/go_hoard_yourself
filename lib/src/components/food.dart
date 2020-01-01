@@ -1,3 +1,4 @@
+import 'package:go_hoard_yourself/src/components/common_component.dart';
 import 'package:go_hoard_yourself/src/models/dragon.dart';
 import 'package:angular/angular.dart';
 import 'package:go_hoard_yourself/src/models/food.dart';
@@ -8,7 +9,7 @@ import 'package:go_hoard_yourself/src/models/food.dart';
   directives: [coreDirectives],
   pipes: [commonPipes],
 )
-class FoodComponent {
+class FoodComponent extends CommonComponent {
   @Input()
   Dragon dragon;
 
