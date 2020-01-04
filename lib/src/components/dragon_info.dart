@@ -1,7 +1,8 @@
+import 'dart:async';
+import 'dart:math';
 import 'package:go_hoard_yourself/src/components/common_component.dart';
-
+import 'package:go_hoard_yourself/src/util.dart';
 import '../models/dragon.dart';
-
 import 'package:angular/angular.dart';
 
 @Component(
@@ -13,6 +14,9 @@ import 'package:angular/angular.dart';
 class DragonInfoComponent extends CommonComponent {
   @Input()
   Dragon dragon;
+
+  String banner = '';
+  Random rng = Random();
 
   String get stomachFullnessDesc {
     var p = dragon.stomachFullPercent;
@@ -32,4 +36,13 @@ class DragonInfoComponent extends CommonComponent {
   }
 
   String get stomachFullnessColor => dragon.stomachFullPercent > 1 ? 'red' : 'black';
+
+  DragonInfoComponent() {
+    Timer.periodic(
+      Duration(seconds: 1),
+      (Timer t) {
+        banner = dragon.unlockedBanners.pick(rng).generate(dragon);
+      },
+    );
+  }
 }

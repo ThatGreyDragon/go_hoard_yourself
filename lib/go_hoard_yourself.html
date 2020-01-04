@@ -6,7 +6,7 @@
             <i class="fa fa-users"></i> {{dragon.kobolds}}
         </div>
         <div class="navbar-text" *ngIf="dragon.goldUnlocked">
-            <i class="fa fa-gem"></i> {{dragon.gold}}
+            <i class="fa fa-coins"></i> {{dragon.gold}}
         </div>
         <div class="navbar-text" *ngIf="dragon.scienceUnlocked">
             <i class="fa fa-flask"></i> {{dragon.sciencePoints}}
@@ -68,7 +68,7 @@
                     </ul>
                 </div>
                 <div class="tab-content card-body overflow-auto" #logPane (init)="enableScrollLock(logPane)">
-                    <div class="tab-pane fade show active" id="status" role="tabpanel">
+                    <div class="tab-pane fade show active h-100" id="status" role="tabpanel">
                         <dragon-info [dragon]="dragon"></dragon-info>
                     </div>
                     <div class="tab-pane fade" id="log" role="tabpanel">

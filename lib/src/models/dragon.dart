@@ -1,5 +1,7 @@
+import 'package:go_hoard_yourself/src/data/banners.dart';
 import 'package:go_hoard_yourself/src/data/buildings.dart';
 import 'package:go_hoard_yourself/src/data/foods.dart';
+import 'package:go_hoard_yourself/src/models/banner.dart';
 import 'package:go_hoard_yourself/src/models/building.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
 import 'package:go_hoard_yourself/src/models/stat.dart';
@@ -33,6 +35,7 @@ class Dragon {
   Food eating;
   List<Task> unlockedTasks = TASKS;
   List<Building> unlockedBuildings = BUILDINGS;
+  List<Banner> unlockedBanners = BANNERS;
   List<LogEntry> log = [];
   int gold = 0;
   int sciencePoints = 0;
