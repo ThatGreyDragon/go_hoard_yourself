@@ -14,8 +14,8 @@
     <h6 class="dropdown-header">Actions</h6>
     <a class="dropdown-item" href="#" (click)="saveGame()">Save game</a>
     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#dialogLoad">Load game...</a>
-    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#">Export save file...</a>
-    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#">Import save file...</a>
+    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#dialogExport">Export game...</a>
+    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#dialogImport">Import game...</a>
     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#dialogReset">Reset game...</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header">Settings</h6>
@@ -68,6 +68,52 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadGame()">Load Game</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dialogExport" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Export Game</h5>
+            <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div>Here is your save's code:</div>
+            <textarea class="w-100" disabled>{{exportGame}}</textarea>
+            <div>
+                Triple-click that box, copy the text, and save it to your computer.
+                Later, paste the code into the corresponding import game dialog to retrieve your save.
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dialogImport" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Import Game</h5>
+            <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div>Paste the code for your savegame here:</div>
+            <textarea class="w-100" #importGameTextarea></textarea>
+            <div>Be careful: Unless autosave is disabled, this will overwirte your existing save!</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="importGame(importGameTextarea.value)">Import Game</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
         </div>

@@ -75,4 +75,14 @@ class SettingsComponent extends CommonComponent {
       GoHoardYourself.dragon.save();
     }
   }
+
+  void importGame(String b64save) {
+    GoHoardYourself.dragon = Dragon.fromJSON(jsonDecode(utf8.decode(base64.decode(b64save))));
+    GoHoardYourself.dragon.log.add(LogEntry('Game imported successfully.'));
+    if (autosave) {
+      GoHoardYourself.dragon.save();
+    }
+  }
+
+  String get exportGame => base64.encode(utf8.encode(jsonEncode(dragon.toJSON())));
 }
