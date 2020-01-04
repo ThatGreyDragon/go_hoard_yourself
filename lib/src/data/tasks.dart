@@ -22,6 +22,7 @@ class TaskGather extends Task {
   @override
   void onComplete(Dragon dragon) {
     dragon.giveFood(FOOD_BURGER);
+    dragon.foodUnlocked = true;
 
     if (dragon.workingOn == this) {
       dragon.log.add(LogEntry('You manage to scrounge up... A cheeseburger? Welp. Time to dig in!'));

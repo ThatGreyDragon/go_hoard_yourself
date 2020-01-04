@@ -58,6 +58,7 @@ class Dragon {
   int gold = 0;
   int sciencePoints = 0;
 
+  bool foodUnlocked = false;
   bool koboldsUnlocked = false;
   bool goldUnlocked = false;
   bool scienceUnlocked = false;
@@ -164,6 +165,7 @@ class Dragon {
       'kobolds': koboldsUnlocked,
       'gold': goldUnlocked,
       'science': scienceUnlocked,
+      'food': foodUnlocked,
     },
   };
 
@@ -199,6 +201,7 @@ class Dragon {
     koboldsUnlocked = json['unlocked']['kobolds'];
     goldUnlocked = json['unlocked']['gold'];
     scienceUnlocked = json['unlocked']['science'];
+    foodUnlocked = json['unlocked']['food'];
 
     for (var building in unlockedBuildings) {
       for (var i = 0; i < building.owned; i++) {
