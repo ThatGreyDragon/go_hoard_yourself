@@ -8,6 +8,9 @@ import '../data/foods.dart';
 
 class TaskGather extends Task {
   @override
+  String get id => 'gather';
+
+  @override
   String get name => 'Gather';
 
   @override
@@ -34,6 +37,9 @@ class TaskGather extends Task {
 }
 
 class TaskExploreCave extends Task {
+  @override
+  String get id => 'cave';
+
   @override
   String get name => 'Explore Cave';
 

@@ -4,6 +4,9 @@ import '../models/food.dart';
 
 class FoodKobold extends Food {
   @override
+  String get id => 'kobold';
+
+  @override
   String get name => 'Kobold';
 
   @override
@@ -42,6 +45,7 @@ class FoodKobold extends Food {
 final FoodKobold FOOD_KOBOLD = FoodKobold();
 
 final Food FOOD_BURGER = BasicFood(
+  id: 'burger',
   name: 'Burger',
   desc: 'Mmm. Greasy!',
   eatTime: 10.0,

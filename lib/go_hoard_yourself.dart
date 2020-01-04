@@ -34,12 +34,20 @@ final int TICKS_PER_SECOND = 30;
   pipes: [commonPipes],
 )
 class GoHoardYourself extends CommonComponent {
-  Dragon dragon = Dragon('Testerino');
+  Dragon dragon = Dragon.load();
 
   GoHoardYourself() {
     Timer.periodic(
       Duration(milliseconds: 1000 ~/ TICKS_PER_SECOND),
       (Timer t) => dragon.onTick(),
     );
+
+    Timer.periodic(
+      Duration(milliseconds: 10000),
+      (Timer t) => dragon.save(),
+    );
+
+    html.window.onBeforeUnload.listen((event) => dragon.save());
+    html.window.onUnload.listen((event) => dragon.save());
   }
 }

@@ -2,6 +2,9 @@ import 'package:go_hoard_yourself/src/models/upgrade.dart';
 
 class UpgradeFeeding extends Upgrade {
   @override
+  String get id => 'feeding';
+
+  @override
   String get name => 'Mealtimes';
 
   @override

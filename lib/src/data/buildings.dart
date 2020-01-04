@@ -3,6 +3,9 @@ import 'package:go_hoard_yourself/src/models/building.dart';
 
 class BuldingHuntingShack extends Building {
   @override
+  String get id => 'hunting-shack';
+
+  @override
   String get name => 'Hunting Shack';
 
   @override

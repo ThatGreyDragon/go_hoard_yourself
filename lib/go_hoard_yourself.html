@@ -2,13 +2,13 @@
 <div class="container-fluid d-flex flex-column 100-vh">
     <nav class="row navbar navbar-expand-lg navbar-light bg-light" #navbar (init)="enableTooltips(navbar)">
         <div class="navbar-brand mb-0 h1">Go Hoard Yourself</div>
-        <div class="navbar-text" *ngIf="dragon.koboldsUnlocked" data-toggle="tooltip" title="Kobolds Owned">
+        <div class="navbar-text" *ngIf="dragon.koboldsUnlocked" data-toggle="tooltip" title="Kobolds">
             <i class="fa fa-users"></i> {{dragon.kobolds}}
         </div>
-        <div class="navbar-text" *ngIf="dragon.goldUnlocked">
+        <div class="navbar-text" *ngIf="dragon.goldUnlocked" data-toggle="tooltip" title="Gold">
             <i class="fa fa-coins"></i> {{dragon.gold}}
         </div>
-        <div class="navbar-text" *ngIf="dragon.scienceUnlocked">
+        <div class="navbar-text" *ngIf="dragon.scienceUnlocked" data-toggle="tooltip" title="Research Points">
             <i class="fa fa-flask"></i> {{dragon.sciencePoints}}
         </div>
         <div class="collapse navbar-collapse" id="resourcesBanner"></div>

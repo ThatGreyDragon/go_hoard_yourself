@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:html';
+
 import 'package:go_hoard_yourself/src/data/banners.dart';
 import 'package:go_hoard_yourself/src/data/buildings.dart';
 import 'package:go_hoard_yourself/src/data/foods.dart';
@@ -19,6 +22,16 @@ class StomachFilling {
   double amount;
 
   StomachFilling(this.food, this.amount);
+
+  StomachFilling.fromJSON(dynamic json) {
+    food = json['food'];
+    amount = json['amount'];
+  }
+
+  dynamic toJSON() => {
+    'food': food.id,
+    'amount': amount,
+  };
 }
 
 class Dragon {
@@ -49,9 +62,13 @@ class Dragon {
   bool goldUnlocked = false;
   bool scienceUnlocked = false;
 
-  Dragon(this.name) {
+  void _init() {
     metabolism.specialMods.add((value) => overfull ? value/2 : value);
     workSpeed.specialMods.add((value) => overfull ? value/2 : value);
+  }
+
+  Dragon(this.name) {
+    _init();
   }
 
   void onTick() {
@@ -125,4 +142,83 @@ class Dragon {
   bool affordable(Building building) => gold >= buildingCost(building);
   double upgradeCost(Upgrade upgrade) => allUpgradeCosts.value * upgrade.cost;
   bool canResearch(Upgrade upgrade) => sciencePoints >= upgradeCost(upgrade);
+
+  dynamic toJSON() => {
+    'name': name,
+    'inventory': Map.fromEntries(inventory.entries.map(
+      (e) => MapEntry(e.key.id, e.value)
+    )),
+    'stomach': stomach.map((filling) => filling.toJSON()).toList(),
+    'weight': weight,
+    'eatingProgress': eatingProgress,
+    'workingOn': workingOn?.id,
+    'eating': eating?.id,
+    'tasks': unlockedTasks.map((task) => task.toJSON()).toList(),
+    'buildings': unlockedBuildings.map((b) => b.toJSON()).toList(),
+    'banners': unlockedBanners.map((b) => b.id).toList(),
+    'unlockableUpgrades': unlockableUpgrades.map((u) => u.id).toList(),
+    'unlockedUpgrades': unlockedUpgrades.map((u) => u.id).toList(),
+    'gold': gold,
+    'sciencePoints': sciencePoints,
+    'unlocked': {
+      'kobolds': koboldsUnlocked,
+      'gold': goldUnlocked,
+      'science': scienceUnlocked,
+    },
+  };
+
+  Dragon.fromJSON(dynamic json) {
+    _init();
+
+    name = json['name'];
+    inventory = Map.fromEntries((json['inventory'] as Map).entries.map(
+      (e) => MapEntry<Food, int>(Food.fromID(e.key), e.value)
+    ));
+    stomach = (json['stomach'] as List).map((f) => StomachFilling.fromJSON(f)).toSet();
+    weight = json['weight'];
+    eatingProgress = json['eatingProgress'];
+    workingOn = Task.fromID(json['workingOn']);
+    eating = Food.fromID(json['eating']);
+    unlockedTasks = (json['tasks'] as List).map(
+      (t) => Task.fromJSON(t)
+    ).toList();
+    unlockedBuildings = (json['buildings'] as List).map(
+      (t) => Building.fromJSON(t)
+    ).toList();
+    unlockedBanners = (json['banners'] as List).map(
+      (b) => Banner.fromID(b)
+    ).toList();
+    unlockableUpgrades = (json['unlockableUpgrades'] as List).map(
+      (b) => Upgrade.fromID(b)
+    ).toList();
+    unlockedUpgrades = (json['unlockedUpgrades'] as List).map(
+      (b) => Upgrade.fromID(b)
+    ).toList();
+    gold = json['gold'];
+    sciencePoints = json['sciencePoints'];
+    koboldsUnlocked = json['unlocked']['kobolds'];
+    goldUnlocked = json['unlocked']['gold'];
+    scienceUnlocked = json['unlocked']['science'];
+
+    for (var building in unlockedBuildings) {
+      for (var i = 0; i < building.owned; i++) {
+        building.onBought(this);
+      }
+    }
+    for (var upgrade in unlockedUpgrades) {
+      upgrade.onUnlock(this);
+    }
+  }
+
+  void save() {
+    window.localStorage['savegame'] = jsonEncode(toJSON());
+  }
+
+  factory Dragon.load() {
+    if (window.localStorage.containsKey('savegame')) {
+      return Dragon.fromJSON(jsonDecode(window.localStorage['savegame']));
+    } else {
+      return Dragon('Testerino');
+    }
+  }
 }
