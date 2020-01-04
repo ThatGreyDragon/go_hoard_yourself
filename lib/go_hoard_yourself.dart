@@ -37,7 +37,7 @@ final String VERSION = '0.1.0';
   pipes: [commonPipes],
 )
 class GoHoardYourself extends CommonComponent {
-  Dragon dragon = Dragon.load();
+  static Dragon dragon = Dragon.load();
 
   GoHoardYourself() {
     Timer.periodic(

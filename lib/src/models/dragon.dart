@@ -24,7 +24,7 @@ class StomachFilling {
   StomachFilling(this.food, this.amount);
 
   StomachFilling.fromJSON(dynamic json) {
-    food = json['food'];
+    food = Food.fromID(json['food']);
     amount = json['amount'];
   }
 

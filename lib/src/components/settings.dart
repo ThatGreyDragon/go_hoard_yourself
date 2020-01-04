@@ -4,6 +4,8 @@ import 'dart:html';
 
 import 'package:go_hoard_yourself/go_hoard_yourself.dart';
 import 'package:go_hoard_yourself/src/components/common_component.dart';
+import 'package:go_hoard_yourself/src/data/buildings.dart';
+import 'package:go_hoard_yourself/src/data/tasks.dart';
 import 'package:go_hoard_yourself/src/models/dragon.dart';
 import 'package:angular/angular.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
@@ -51,5 +53,26 @@ class SettingsComponent extends CommonComponent {
     saveSettings();
     dragon.save();
     dragon.log.add(LogEntry('Game saved successfully.'));
+  }
+
+  void loadGame() {
+    GoHoardYourself.dragon = Dragon.load();
+    GoHoardYourself.dragon.log.add(LogEntry('Game loaded successfully.'));
+  }
+
+  void resetGame() {
+    GoHoardYourself.dragon = Dragon('Testerino');
+    for (var task in TASKS) {
+      task.progress = 0.0;
+      task.koboldsAssigned = 0;
+    }
+    for (var building in BUILDINGS) {
+      building.owned = 0;
+    }
+
+    GoHoardYourself.dragon.log.add(LogEntry('Game reset successfully.'));
+    if (autosave) {
+      GoHoardYourself.dragon.save();
+    }
   }
 }
