@@ -23,6 +23,9 @@ class TaskGather extends Task {
     if (dragon.workingOn == this) {
       dragon.log.add(LogEntry('You manage to scrounge up... A cheeseburger? Welp. Time to dig in!'));
     }
+
+    dragon.scienceUnlocked = true;
+    dragon.sciencePoints += 50;
   }
 
   TaskGather() {

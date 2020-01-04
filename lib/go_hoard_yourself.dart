@@ -7,6 +7,7 @@ import 'package:go_hoard_yourself/src/components/log.dart';
 import 'package:go_hoard_yourself/src/components/log_toasts.dart';
 import 'package:go_hoard_yourself/src/components/tasks.dart';
 import 'package:go_hoard_yourself/src/components/dragon_info.dart';
+import 'package:go_hoard_yourself/src/components/upgrades.dart';
 import 'package:go_hoard_yourself/src/models/dragon.dart';
 
 import 'package:angular/angular.dart';
@@ -28,6 +29,7 @@ final int TICKS_PER_SECOND = 30;
     LogComponent,
     LogToastsComponent,
     BuildingsComponent,
+    UpgradesComponent,
   ],
   pipes: [commonPipes],
 )

@@ -92,11 +92,21 @@
                             href="#food"
                             role="tab"
                         >Food</a></li>
+                        <li class="nav-item" *ngIf="dragon.scienceUnlocked"><a
+                            class="nav-link"
+                            id="upgrades-tab"
+                            data-toggle="tab"
+                            href="#upgrades"
+                            role="tab"
+                        >Research</a></li>
                     </ul>
                 </div>
                 <div class="tab-content card-body">
                     <div class="tab-pane fade show active" id="food" role="tabpanel">
                         <food [dragon]="dragon"></food>
+                    </div>
+                    <div class="tab-pane fade" id="upgrades" role="tabpanel">
+                        <upgrades [dragon]="dragon"></upgrades>
                     </div>
                 </div>
             </div>

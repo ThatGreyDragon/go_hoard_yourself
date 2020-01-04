@@ -19,7 +19,7 @@ class BuldingHuntingShack extends Building {
   }
 }
 
-final Building BUILDING_HUNTING_SHACK = BuldingHuntingShack();
+final BuldingHuntingShack BUILDING_HUNTING_SHACK = BuldingHuntingShack();
 
 final List<Building> BUILDINGS = [
   BUILDING_HUNTING_SHACK,

@@ -1,10 +1,12 @@
 import 'package:go_hoard_yourself/src/data/banners.dart';
 import 'package:go_hoard_yourself/src/data/buildings.dart';
 import 'package:go_hoard_yourself/src/data/foods.dart';
+import 'package:go_hoard_yourself/src/data/upgrades.dart';
 import 'package:go_hoard_yourself/src/models/banner.dart';
 import 'package:go_hoard_yourself/src/models/building.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
 import 'package:go_hoard_yourself/src/models/stat.dart';
+import 'package:go_hoard_yourself/src/models/upgrade.dart';
 
 import '../data/tasks.dart';
 import '../models/food.dart';
@@ -29,6 +31,7 @@ class Dragon {
   Stat workSpeed = Stat(0.1);
   Stat koboldWorkSpeed = Stat(0.01);
   Stat allBuildingCosts = Stat(1.0);
+  Stat allUpgradeCosts = Stat(1.0);
   double weight = 100.0;
   double eatingProgress = 0.0;
   Task workingOn;
@@ -36,6 +39,8 @@ class Dragon {
   List<Task> unlockedTasks = TASKS;
   List<Building> unlockedBuildings = BUILDINGS;
   List<Banner> unlockedBanners = BANNERS;
+  List<Upgrade> unlockableUpgrades = List<Upgrade>.from(UPGRADES);
+  List<Upgrade> unlockedUpgrades = [];
   List<LogEntry> log = [];
   int gold = 0;
   int sciencePoints = 0;
@@ -118,4 +123,6 @@ class Dragon {
 
   double buildingCost(Building building) => allBuildingCosts.value * building.cost;
   bool affordable(Building building) => gold >= buildingCost(building);
+  double upgradeCost(Upgrade upgrade) => allUpgradeCosts.value * upgrade.cost;
+  bool canResearch(Upgrade upgrade) => sciencePoints >= upgradeCost(upgrade);
 }

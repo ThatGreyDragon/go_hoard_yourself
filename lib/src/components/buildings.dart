@@ -19,5 +19,6 @@ class BuildingsComponent extends CommonComponent {
     if (!dragon.affordable(building)) return;
     dragon.gold -= dragon.buildingCost(building).floor();
     building.owned++;
+    building.onBought(dragon);
   }
 }

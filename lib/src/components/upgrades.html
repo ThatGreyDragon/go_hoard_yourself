@@ -1,0 +1,58 @@
+<ul class="nav nav-pills" role="tablist">
+    <li class="nav-item"><a
+        class="nav-link active"
+        id="upgrades-not-bought-tab"
+        data-toggle="tab"
+        href="#upgrades-not-bought"
+        role="tab"
+    >Available</a></li>
+    <li class="nav-item"><a
+        class="nav-link"
+        id="upgrades-bought-tab"
+        data-toggle="tab"
+        href="#upgrades-bought"
+        role="tab"
+    >Completed</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="upgrades-not-bought" role="tabpanel">
+        <div *ngFor="let upgrade of dragon.unlockableUpgrades" #pane (init)="enableTooltips(pane)">
+            <div class="card mt-2" data-toggle="tooltip" [attr.title]="upgrade.desc">
+                <div class="container card-body">
+                    <div class="row">
+                        <button
+                            type="button"
+                            class="btn btn-secondary col"
+                            [attr.disabled]="dragon.canResearch(upgrade) ? null : 1"
+                            (click)="research(upgrade)"
+                        >
+                            {{upgrade.name}}
+                        </button>
+                        <div class="col m-1">
+                            <div><i class="fa fa-flask"></i> {{dragon.upgradeCost(upgrade) | number: '1.0-0'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="upgrades-bought" role="tabpanel">
+        <div *ngFor="let upgrade of dragon.unlockedUpgrades" #pane (init)="enableTooltips(pane)">
+            <div class="card mt-2" data-toggle="tooltip" [attr.title]="upgrade.desc">
+                <div class="container card-body">
+                    <div class="row">
+                        <div class="col">
+                            {{upgrade.name}}
+                        </div>
+                        <div class="col m-1">
+                            <div><i class="fa fa-flask"></i> {{dragon.upgradeCost(upgrade) | number: '1.0-0'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
