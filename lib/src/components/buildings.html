@@ -1,0 +1,20 @@
+<div *ngFor="let building of dragon.unlockedBuildings" #pane (init)="enableTooltips(pane)">
+    <div class="card mb-2" data-toggle="tooltip" [attr.title]="building.desc">
+        <div class="container card-body">
+            <div class="row">
+                <button
+                    type="button"
+                    class="btn btn-secondary col"
+                    [attr.disabled]="dragon.affordable(building) ? null : 1"
+                    (click)="build(building)"
+                >
+                    {{building.name}}
+                </button>
+                <div class="col p-0 m-1">
+                    <div><i class="fa fa-home"></i> {{building.owned}}</div>
+                    <div><i class="fa fa-gem"></i> {{dragon.buildingCost(building) | number: '1.0-0'}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

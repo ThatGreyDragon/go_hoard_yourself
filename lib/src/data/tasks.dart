@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:go_hoard_yourself/src/models/log.dart';
 
 import '../models/task.dart';
@@ -38,14 +40,26 @@ class TaskExploreCave extends Task {
   @override
   double get timeToComplete => 5.0;
 
+  Random rng = Random();
+
   @override
   void onComplete(Dragon dragon) {
-    dragon.giveFood(FOOD_KOBOLD);
-    dragon.koboldsUnlocked = true;
+    if (rng.nextBool()) {
+      dragon.giveFood(FOOD_KOBOLD);
+      dragon.koboldsUnlocked = true;
 
-    if (dragon.workingOn == this) {
-      dragon.log.add(LogEntry('You find a kobold! They quickly pledge allegiance to you. Sweet!'));
+      if (dragon.workingOn == this) {
+        dragon.log.add(LogEntry('You find a kobold! They quickly pledge allegiance to you. Sweet!'));
+      }
+    } else {
+      dragon.gold += 100 + rng.nextInt(101);
+      dragon.goldUnlocked = true;
+
+      if (dragon.workingOn == this) {
+        dragon.log.add(LogEntry('You find some gold. Nice!'));
+      }
     }
+
   }
 
   TaskExploreCave() {

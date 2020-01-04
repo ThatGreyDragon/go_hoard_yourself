@@ -1,5 +1,6 @@
 import 'dart:html' as html;
 
+import 'package:go_hoard_yourself/src/components/buildings.dart';
 import 'package:go_hoard_yourself/src/components/common_component.dart';
 import 'package:go_hoard_yourself/src/components/food.dart';
 import 'package:go_hoard_yourself/src/components/log.dart';
@@ -26,6 +27,7 @@ final int TICKS_PER_SECOND = 30;
     FoodComponent,
     LogComponent,
     LogToastsComponent,
+    BuildingsComponent,
   ],
   pipes: [commonPipes],
 )

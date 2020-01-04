@@ -27,7 +27,7 @@
                             href="#tasks"
                             role="tab"
                         >Tasks</a></li>
-                        <li class="nav-item"><a
+                        <li class="nav-item" *ngIf="dragon.goldUnlocked"><a
                             class="nav-link"
                             id="build-tab"
                             data-toggle="tab"
@@ -41,7 +41,7 @@
                         <tasks [dragon]="dragon"></tasks>
                     </div>
                     <div class="tab-pane fade" id="build" role="tabpanel">
-                        TODO
+                        <buildings [dragon]="dragon"></buildings>
                     </div>
                 </div>
             </div>

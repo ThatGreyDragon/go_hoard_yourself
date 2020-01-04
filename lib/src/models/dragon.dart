@@ -1,4 +1,6 @@
+import 'package:go_hoard_yourself/src/data/buildings.dart';
 import 'package:go_hoard_yourself/src/data/foods.dart';
+import 'package:go_hoard_yourself/src/models/building.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
 import 'package:go_hoard_yourself/src/models/stat.dart';
 
@@ -24,11 +26,13 @@ class Dragon {
   Stat eatSpeed = Stat(1.0);
   Stat workSpeed = Stat(0.1);
   Stat koboldWorkSpeed = Stat(0.01);
+  Stat allBuildingCosts = Stat(1.0);
   double weight = 100.0;
   double eatingProgress = 0.0;
   Task workingOn;
   Food eating;
   List<Task> unlockedTasks = TASKS;
+  List<Building> unlockedBuildings = BUILDINGS;
   List<LogEntry> log = [];
   int gold = 0;
   int sciencePoints = 0;
@@ -108,4 +112,7 @@ class Dragon {
       inventory.remove(food);
     }
   }
+
+  double buildingCost(Building building) => allBuildingCosts.value * building.cost;
+  bool affordable(Building building) => gold >= buildingCost(building);
 }
