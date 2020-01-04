@@ -82,10 +82,10 @@
         </div>
 
         <div class="col w-25 p-0">
-            <div class="card h-100">
+            <div class="card h-100" *ngIf="dragon.foodUnlocked">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                        <li class="nav-item" *ngIf="dragon.foodUnlocked"><a
+                        <li class="nav-item"><a
                             class="nav-link active"
                             id="food-tab"
                             data-toggle="tab"
