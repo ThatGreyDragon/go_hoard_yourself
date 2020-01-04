@@ -211,12 +211,12 @@ class Dragon {
   }
 
   void save() {
-    window.localStorage['savegame'] = jsonEncode(toJSON());
+    window.localStorage['GHY_Savegame'] = jsonEncode(toJSON());
   }
 
   factory Dragon.load() {
-    if (window.localStorage.containsKey('savegame')) {
-      return Dragon.fromJSON(jsonDecode(window.localStorage['savegame']));
+    if (window.localStorage.containsKey('GHY_Savegame')) {
+      return Dragon.fromJSON(jsonDecode(window.localStorage['GHY_Savegame']));
     } else {
       return Dragon('Testerino');
     }

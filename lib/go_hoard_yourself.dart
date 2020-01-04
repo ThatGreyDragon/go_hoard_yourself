@@ -47,10 +47,16 @@ class GoHoardYourself extends CommonComponent {
 
     Timer.periodic(
       Duration(milliseconds: 10000),
-      (Timer t) => dragon.save(),
+      (Timer t) => saveGame(),
     );
 
-    html.window.onBeforeUnload.listen((event) => dragon.save());
-    html.window.onUnload.listen((event) => dragon.save());
+    html.window.onBeforeUnload.listen((event) => saveGame());
+    html.window.onUnload.listen((event) => saveGame());
+  }
+
+  void saveGame() {
+    if (SettingsComponent.autosave) {
+      dragon.save();
+    }
   }
 }
