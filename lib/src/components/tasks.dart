@@ -23,14 +23,23 @@ class TasksComponent extends CommonComponent {
     }
   }
 
+  bool canDecreaseAllocation(Task task) {
+    return task.koboldsAssigned > 0;
+  }
+
   void decreaseAllocation(Task task) {
-    if (task.koboldsAssigned > 0) {
+    if (canDecreaseAllocation(task)) {
       task.koboldsAssigned--;
     }
   }
 
+  bool canIncreaseAllocation(Task task) {
+    // this is not "koboldsAssigned < maxKoboldsAssignable" because maxKoboldsAssignable may be non-integral
+    return dragon.koboldsInUse < dragon.kobolds && task.koboldsAssigned+1 <= task.maxKoboldsAssignable.value;
+  }
+
   void increaseAllocation(Task task) {
-    if (dragon.koboldsInUse < dragon.kobolds) {
+    if (canIncreaseAllocation(task)) {
       task.koboldsAssigned++;
     }
   }

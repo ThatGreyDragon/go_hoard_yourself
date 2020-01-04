@@ -1,4 +1,5 @@
 import 'package:go_hoard_yourself/src/models/dragon.dart';
+import 'package:go_hoard_yourself/src/models/stat.dart';
 
 abstract class Task {
   String get name;
@@ -7,6 +8,7 @@ abstract class Task {
 
   double progress = 0.0;
   int koboldsAssigned = 0;
+  Stat maxKoboldsAssignable = Stat(0.0);
 
   void onComplete(Dragon dragon);
 

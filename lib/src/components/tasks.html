@@ -26,13 +26,13 @@
                 <button
                     class="btn btn-secondary btn-sm col"
                     (click)="decreaseAllocation(task)"
-                    [attr.disabled]="task.koboldsAssigned > 0 ? null : 1"
+                    [attr.disabled]="canDecreaseAllocation(task) ? null : 1"
                 ><i class="fa fa-minus"></i></button>
-                <div class="col"><i class="fa fa-users"></i> {{task.koboldsAssigned}}</div>
+                <div class="col"><i class="fa fa-users"></i> {{task.koboldsAssigned}} / {{task.maxKoboldsAssignable.value | number: '1.0-0'}}</div>
                 <button
                     class="btn btn-secondary btn-sm col"
                     (click)="increaseAllocation(task)"
-                    [attr.disabled]="dragon.koboldsInUse < dragon.kobolds ? null : 1"
+                    [attr.disabled]="canIncreaseAllocation(task) ? null : 1"
                 ><i class="fa fa-plus"></i></button>
             </div>
         </div>

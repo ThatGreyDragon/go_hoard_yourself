@@ -22,6 +22,10 @@ class TaskGather extends Task {
       dragon.log.add(LogEntry('You manage to scrounge up... A cheeseburger? Welp. Time to dig in!'));
     }
   }
+
+  TaskGather() {
+    maxKoboldsAssignable.flatMods.add(() => 5);
+  }
 }
 
 class TaskExploreCave extends Task {
@@ -42,6 +46,10 @@ class TaskExploreCave extends Task {
     if (dragon.workingOn == this) {
       dragon.log.add(LogEntry('You find a kobold! They quickly pledge allegiance to you. Sweet!'));
     }
+  }
+
+  TaskExploreCave() {
+    maxKoboldsAssignable.flatMods.add(() => 5);
   }
 }
 
