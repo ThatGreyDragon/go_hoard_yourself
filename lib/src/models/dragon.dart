@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'dart:html';
 
+import 'package:go_hoard_yourself/src/components/popup.dart';
 import 'package:go_hoard_yourself/src/data/banners.dart';
 import 'package:go_hoard_yourself/src/data/buildings.dart';
 import 'package:go_hoard_yourself/src/data/foods.dart';
 import 'package:go_hoard_yourself/src/data/upgrades.dart';
+import 'package:go_hoard_yourself/src/data/weight_milestones.dart';
 import 'package:go_hoard_yourself/src/models/banner.dart';
 import 'package:go_hoard_yourself/src/models/building.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
+import 'package:go_hoard_yourself/src/models/popup.dart';
 import 'package:go_hoard_yourself/src/models/stat.dart';
 import 'package:go_hoard_yourself/src/models/upgrade.dart';
 
@@ -57,11 +60,14 @@ class Dragon {
   List<LogEntry> log = [];
   int gold = 0;
   int sciencePoints = 0;
+  List<Popup> popupQueue = [];
 
   bool foodUnlocked = false;
   bool koboldsUnlocked = false;
   bool goldUnlocked = false;
   bool scienceUnlocked = false;
+
+  Map<double, Popup> weightMilestones = Map<double, Popup>.from(WEIGHT_MILESTONES);
 
   void _init() {
     metabolism.specialMods.add((value) => overfull ? value/2 : value);
@@ -73,6 +79,14 @@ class Dragon {
   }
 
   void onTick() {
+    // pop up any milestones
+    for (var entry in weightMilestones.entries.toList()) {
+      if (weight >= entry.key) {
+        showPopup(entry.value);
+        weightMilestones.remove(entry.key);
+      }
+    }
+
     // do work
     if (eating == null) {
       workingOn?.doWork(this, workSpeed.value);
@@ -211,6 +225,12 @@ class Dragon {
     for (var upgrade in unlockedUpgrades) {
       upgrade.onUnlock(this);
     }
+
+    for (var entry in weightMilestones.entries.toList()) {
+      if (weight >= entry.key) {
+        weightMilestones.remove(entry.key);
+      }
+    }
   }
 
   void save() {
@@ -222,6 +242,13 @@ class Dragon {
       return Dragon.fromJSON(jsonDecode(window.localStorage['GHY_Savegame']));
     } else {
       return Dragon('Testerino');
+    }
+  }
+
+  void showPopup(Popup popup) {
+    popupQueue.add(popup);
+    if (PopupComponent.INSTANCE != null && !PopupComponent.INSTANCE.open) {
+      PopupComponent.INSTANCE.showPopup();
     }
   }
 }
