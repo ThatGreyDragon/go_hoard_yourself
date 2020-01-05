@@ -9,13 +9,13 @@ class BuldingHuntingShack extends Building {
   String get name => 'Hunting Shack';
 
   @override
-  String get desc => 'With this shack, kobolds can hunt further out, allowing you to have more kobolds hunt.';
+  String get desc => 'With this shack, kobolds can hunt further out, allowing you to have more kobolds hunt at the same time.';
 
   @override
-  double get baseCost => 100;
+  double get baseCost => 200;
 
   @override
-  double get factorCost => 1.05;
+  double get factorCost => 1.15;
 
   BuldingHuntingShack() {
     TASK_GATHER.maxKoboldsAssignable.flatMods.add(() => owned*5.0);

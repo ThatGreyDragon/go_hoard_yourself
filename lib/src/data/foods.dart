@@ -44,17 +44,28 @@ class FoodKobold extends Food {
 
 final FoodKobold FOOD_KOBOLD = FoodKobold();
 
-final Food FOOD_BURGER = BasicFood(
-  id: 'burger',
-  name: 'Burger',
-  desc: 'Mmm. Greasy!',
-  eatTime: 10.0,
-  size: 10.0,
-  fatRatio: 1.0,
+final Food FOOD_RABBIT = BasicFood(
+  id: 'rabbit',
+  name: 'Raw Rabbit',
+  desc: 'A whole raw rabbit. Congratulations on the hunt!',
+  eatTime: 20.0,
+  size: 5.0,
+  fatRatio: 0.5,
+  digestionRate: 1.0,
+);
+
+final Food FOOD_DEER = BasicFood(
+  id: 'deer',
+  name: 'Raw Deer',
+  desc: 'On one claw, you caught a whole deer! On the other, venison is pretty dang gamey. Ah well, better dig in.',
+  eatTime: 40.0,
+  size: 15.0,
+  fatRatio: 0.5,
   digestionRate: 1.0,
 );
 
 final List<Food> FOODS = [
-  FOOD_BURGER,
   FOOD_KOBOLD,
+  FOOD_RABBIT,
+  FOOD_DEER,
 ];

@@ -1,12 +1,17 @@
 import 'dart:math';
 
+import 'package:go_hoard_yourself/src/data/buildings.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
+import 'package:go_hoard_yourself/src/models/popup.dart';
+import 'package:go_hoard_yourself/src/util.dart';
 
 import '../models/task.dart';
 import '../models/dragon.dart';
 import '../data/foods.dart';
 
 class TaskGather extends Task {
+  Random rng = Random();
+
   @override
   String get id => 'gather';
 
@@ -17,19 +22,42 @@ class TaskGather extends Task {
   String get desc => 'Forage and hunt for something to eat!';
 
   @override
-  double get timeToComplete => 5.0;
+  double get timeToComplete => 1.0;
 
   @override
   void onComplete(Dragon dragon) {
-    dragon.giveFood(FOOD_BURGER);
+    dragon.giveFood([
+      Weight(5, FOOD_RABBIT),
+      Weight(1, FOOD_DEER),
+    ].pickWeighted(rng));
     dragon.foodUnlocked = true;
 
     if (dragon.workingOn == this) {
-      dragon.log.add(LogEntry('You manage to scrounge up... A cheeseburger? Welp. Time to dig in!'));
+      dragon.log.add(LogEntry('Afer a long hunt, you catch some prey! Time to dig in...'));
     }
 
-    dragon.scienceUnlocked = true;
-    dragon.sciencePoints += 50;
+    if (timesCompleted == 1) {
+      dragon.showPopup(Popup('The thrill of the hunt', '''
+The sighting. The stalking. The pouncing. The kill.
+
+Such are the simple pleasures of the hunt. And, to boot, you got something to eat out of it! Time to dig in...
+
+(Completing tasks nets you rewards. In this case, food! Click on an item in the Food tab to start consuming it. But don't eat too much, or you'll get fat...)
+      '''));
+    }
+
+    if (timesCompleted == 10) {
+      const BASE_MESSAGE = '''
+One particularly long hunt ends with the prey diving into a cave you haven't seen previously. Maybe it's worth exploring?
+      ''';
+
+      dragon.unlockedTasks.add(TASK_EXPLORE_CAVE);
+      dragon.log.add(LogEntry(BASE_MESSAGE, LogType.GOOD));
+      dragon.showPopup(Popup('What\'s this?', BASE_MESSAGE + '''
+
+(Sometimes, doing certain actions will unlock new tasks you can work on. You can only work on one task at a time, though, so plan accordingly!)
+      '''));
+    }
   }
 
   TaskGather() {
@@ -48,7 +76,7 @@ class TaskExploreCave extends Task {
   String get desc => 'Maybe something good to eat is in there?';
 
   @override
-  double get timeToComplete => 5.0;
+  double get timeToComplete => 20.0;
 
   Random rng = Random();
 
@@ -56,20 +84,47 @@ class TaskExploreCave extends Task {
   void onComplete(Dragon dragon) {
     if (rng.nextBool()) {
       dragon.giveFood(FOOD_KOBOLD);
-      dragon.koboldsUnlocked = true;
 
-      if (dragon.workingOn == this) {
-        dragon.log.add(LogEntry('You find a kobold! They quickly pledge allegiance to you. Sweet!'));
+      if (!dragon.koboldsUnlocked) {
+        const BASE_MESSAGE = '''
+You find a kobold huddled in the back of the cave. Upon seeing you, they rush to your side, quickly pledging eternal allegiance to you. Sweet!
+        ''';
+
+        dragon.log.add(LogEntry(BASE_MESSAGE, LogType.GOOD));
+        dragon.showPopup(Popup('A new friend...', BASE_MESSAGE + '''
+
+(Kobolds can be assigned to complete tasks for you in the Tasks pane. Take this new friend of yours and assign them to a task now!)
+        '''));
+        dragon.koboldsUnlocked = true;
+      } else if (dragon.workingOn == this) {
+        dragon.log.add(LogEntry('''
+          You find another kobold back in the cave. Great, more workforce!
+        '''));
       }
     } else {
-      dragon.gold += 100 + rng.nextInt(101);
-      dragon.goldUnlocked = true;
+      const BASE_MESSAGE = '''
+You find some gold coins tucked away in a crevice of the cave. Maybe you can spend these to get something built around here...
+      ''';
 
-      if (dragon.workingOn == this) {
-        dragon.log.add(LogEntry('You find some gold. Nice!'));
+      dragon.gold += 100 + rng.nextInt(101);
+
+      if (!dragon.goldUnlocked) {
+        dragon.log.add(LogEntry(BASE_MESSAGE, LogType.GOOD));
+        dragon.showPopup(Popup('Riches!', BASE_MESSAGE + '''
+
+(Gold can be used to commission the construction of buildings, which provide various benefits based on how many you have. Be careful, however: The cost of buildings increase every time you build one!)
+        '''));
+        dragon.goldUnlocked = true;
+      } else if (dragon.workingOn == this) {
+        dragon.log.add(LogEntry('''
+          You find some more gold back in the cave. What to spend it on...
+        '''));
       }
     }
 
+    if (dragon.koboldsUnlocked && dragon.goldUnlocked && !dragon.unlockedBuildings.contains(BUILDING_HUNTING_SHACK)) {
+      dragon.unlockedBuildings.add(BUILDING_HUNTING_SHACK);
+    }
   }
 
   TaskExploreCave() {

@@ -63,8 +63,7 @@ class SettingsComponent extends CommonComponent {
   void resetGame() {
     GoHoardYourself.dragon = Dragon();
     for (var task in TASKS) {
-      task.progress = 0.0;
-      task.koboldsAssigned = 0;
+      task.reset();
     }
     for (var building in BUILDINGS) {
       building.owned = 0;

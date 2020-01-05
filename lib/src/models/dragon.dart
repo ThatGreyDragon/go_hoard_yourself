@@ -53,10 +53,10 @@ class Dragon {
   double eatingProgress = 0.0;
   Task workingOn;
   Food eating;
-  List<Task> unlockedTasks = TASKS;
-  List<Building> unlockedBuildings = BUILDINGS;
+  List<Task> unlockedTasks = [TASK_GATHER];
+  List<Building> unlockedBuildings = [];
   List<Banner> unlockedBanners = BANNERS;
-  List<Upgrade> unlockableUpgrades = List<Upgrade>.from(UPGRADES);
+  List<Upgrade> unlockableUpgrades = [];
   List<Upgrade> unlockedUpgrades = [];
   List<LogEntry> log = [];
   int gold = 0;
