@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:html';
 
+import 'package:go_hoard_yourself/src/components/new_game.dart';
 import 'package:go_hoard_yourself/src/components/popup.dart';
 import 'package:go_hoard_yourself/src/data/banners.dart';
 import 'package:go_hoard_yourself/src/data/buildings.dart';
@@ -74,8 +75,11 @@ class Dragon {
     workSpeed.specialMods.add((value) => overfull ? value/2 : value);
   }
 
-  Dragon(this.name) {
+  Dragon() {
     _init();
+    if (NewGameComponent.INSTANCE != null) {
+      NewGameComponent.INSTANCE.showNewGame();
+    }
   }
 
   void onTick() {
@@ -241,7 +245,7 @@ class Dragon {
     if (window.localStorage.containsKey('GHY_Savegame')) {
       return Dragon.fromJSON(jsonDecode(window.localStorage['GHY_Savegame']));
     } else {
-      return Dragon('Testerino');
+      return Dragon();
     }
   }
 

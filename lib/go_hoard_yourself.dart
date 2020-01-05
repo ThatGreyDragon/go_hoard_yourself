@@ -5,6 +5,7 @@ import 'package:go_hoard_yourself/src/components/common_component.dart';
 import 'package:go_hoard_yourself/src/components/food.dart';
 import 'package:go_hoard_yourself/src/components/log.dart';
 import 'package:go_hoard_yourself/src/components/log_toasts.dart';
+import 'package:go_hoard_yourself/src/components/new_game.dart';
 import 'package:go_hoard_yourself/src/components/popup.dart';
 import 'package:go_hoard_yourself/src/components/settings.dart';
 import 'package:go_hoard_yourself/src/components/tasks.dart';
@@ -35,6 +36,7 @@ final String VERSION = '0.1.0';
     UpgradesComponent,
     SettingsComponent,
     PopupComponent,
+    NewGameComponent,
   ],
   pipes: [commonPipes],
 )

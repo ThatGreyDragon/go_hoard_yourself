@@ -1,0 +1,27 @@
+<div class="modal fade" data-backdrop="static" id="dialogNewGame" tabindex="-1" role="dialog" #dialogNewGame (init)="onInit(dialogNewGame, nameInput)">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">New Game</h5>
+        </div>
+        <div class="modal-body" style="white-space: pre-line;">
+            <p>Welcome to Go Hoard Yourself!</p>
+            <p>
+                You are a young dragon, setting out into the world for the first time.
+                As a dragon, your purpose in life is clear: Get a hoard.
+                And is there anything better to hoard than yourself?
+                Your stomach rumbles... You should start with looking for some food.
+            </p>
+            <p>But before that... What is your name?</p>
+            <form (submit)="nameInput.value.isEmpty ? null : closeNewGame()">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter name here..." #nameInput>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" [disabled]="nameInput.value.isEmpty">Begin!</button>
+        </div>
+        </div>
+    </div>
+</div>
