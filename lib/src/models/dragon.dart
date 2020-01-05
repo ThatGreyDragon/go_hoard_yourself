@@ -67,6 +67,7 @@ class Dragon {
   bool koboldsUnlocked = false;
   bool goldUnlocked = false;
   bool scienceUnlocked = false;
+  bool overfullUnlocked = false;
 
   Map<double, Popup> weightMilestones = Map<double, Popup>.from(WEIGHT_MILESTONES);
 
@@ -143,10 +144,20 @@ class Dragon {
         break;
       }
     }
+
     if (exisitingFilling != null) {
       exisitingFilling.amount += food.size;
     } else {
       stomach.add(StomachFilling(food, food.size));
+    }
+
+    if (overfull && !overfullUnlocked) {
+      overfullUnlocked = true;
+      showPopup(Popup('Too much to eat...', '''
+        As you chow down on your latest meal, your stomach begins to hurt. By the end of it, you're slowly cramming food in your face, groaning in between bites... Your poor gut couldn't hold another scrap! With a sick-sounding hiccup, you go back to your den to rest it off...
+
+        (You have just eaten too much and became overfull. While overfull, your work speed and digestion rate is reduced. To eat as much as you want, try to avoid becoming overfull!)
+      '''));
     }
   }
 
@@ -184,6 +195,7 @@ class Dragon {
       'gold': goldUnlocked,
       'science': scienceUnlocked,
       'food': foodUnlocked,
+      'overfull': overfullUnlocked,
     },
   };
 
@@ -214,12 +226,13 @@ class Dragon {
     unlockedUpgrades = (json['unlockedUpgrades'] as List).map(
       (b) => Upgrade.fromID(b)
     ).toList();
-    gold = json['gold'];
-    sciencePoints = json['sciencePoints'];
-    koboldsUnlocked = json['unlocked']['kobolds'];
-    goldUnlocked = json['unlocked']['gold'];
-    scienceUnlocked = json['unlocked']['science'];
-    foodUnlocked = json['unlocked']['food'];
+    gold = json['gold'] ?? 0;
+    sciencePoints = json['sciencePoints'] ?? 0;
+    koboldsUnlocked = json['unlocked']['kobolds'] ?? false;
+    goldUnlocked = json['unlocked']['gold'] ?? false;
+    scienceUnlocked = json['unlocked']['science'] ?? false;
+    foodUnlocked = json['unlocked']['food'] ?? false;
+    overfullUnlocked = json['unlocked']['overfull'] ?? false;
 
     for (var building in unlockedBuildings) {
       for (var i = 0; i < building.owned; i++) {
