@@ -22,7 +22,7 @@ class TaskGather extends Task {
   String get desc => 'Forage and hunt for something to eat!';
 
   @override
-  double get timeToComplete => 1.0;
+  double get timeToComplete => 10.0;
 
   @override
   void onComplete(Dragon dragon) {
