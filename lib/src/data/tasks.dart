@@ -93,6 +93,7 @@ Tucked away among some gold coins you find... An old map! You manage to make out
 (Gold can be used at the Market to purchase items and construct buildings, which provide various benefits based on how many you have. Be careful, however: The cost of every item increases every time you purchase one!)
       '''));
       dragon.marketUnlocked = true;
+      dragon.unlockedBuildings.add(BUILDING_STOMACH_OIL);
       return;
     }
 
@@ -131,10 +132,6 @@ You find some gold coins tucked away in a crevice of the cave. Maybe you can spe
           You find some more gold back in the cave. What to spend it on...
         '''));
       }
-    }
-
-    if (dragon.koboldsUnlocked && dragon.goldUnlocked && !dragon.unlockedBuildings.contains(BUILDING_HUNTING_SHACK)) {
-      dragon.unlockedBuildings.add(BUILDING_HUNTING_SHACK);
     }
   }
 
