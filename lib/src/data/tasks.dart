@@ -82,6 +82,20 @@ class TaskExploreCave extends Task {
 
   @override
   void onComplete(Dragon dragon) {
+    if (!dragon.marketUnlocked && dragon.goldUnlocked && timesCompleted >= 10) {
+      const BASE_MESSAGE = '''
+Tucked away among some gold coins you find... An old map! You manage to make out the location of a settlement nearby. The map says it's a trading settlement... Time to pay it a visit with your hoard, you think!
+      ''';
+
+      dragon.log.add(LogEntry(BASE_MESSAGE, LogType.GOOD));
+      dragon.showPopup(Popup('A use for gold?', BASE_MESSAGE + '''
+
+(Gold can be used at the Market to purchase items and construct buildings, which provide various benefits based on how many you have. Be careful, however: The cost of every item increases every time you purchase one!)
+      '''));
+      dragon.marketUnlocked = true;
+      return;
+    }
+
     if (rng.nextBool()) {
       dragon.giveFood(FOOD_KOBOLD);
 
@@ -103,17 +117,14 @@ You find a kobold huddled in the back of the cave. Upon seeing you, they rush to
       }
     } else {
       const BASE_MESSAGE = '''
-You find some gold coins tucked away in a crevice of the cave. Maybe you can spend these to get something built around here...
+You find some gold coins tucked away in a crevice of the cave. Maybe you can spend these somewhere... But where? Maybe the cave has answers yet.
       ''';
 
-      dragon.gold += 100 + rng.nextInt(101);
+      dragon.gold += rng.nextIntBetween(100, 200);
 
       if (!dragon.goldUnlocked) {
         dragon.log.add(LogEntry(BASE_MESSAGE, LogType.GOOD));
-        dragon.showPopup(Popup('Riches!', BASE_MESSAGE + '''
-
-(Gold can be used to commission the construction of buildings, which provide various benefits based on how many you have. Be careful, however: The cost of buildings increase every time you build one!)
-        '''));
+        dragon.showPopup(Popup('Riches!', BASE_MESSAGE));
         dragon.goldUnlocked = true;
       } else if (dragon.workingOn == this) {
         dragon.log.add(LogEntry('''

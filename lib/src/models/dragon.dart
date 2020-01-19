@@ -68,6 +68,7 @@ class Dragon {
   bool goldUnlocked = false;
   bool scienceUnlocked = false;
   bool overfullUnlocked = false;
+  bool marketUnlocked = false;
 
   Map<double, Popup> weightMilestones = Map<double, Popup>.from(WEIGHT_MILESTONES);
 
@@ -196,6 +197,7 @@ class Dragon {
       'science': scienceUnlocked,
       'food': foodUnlocked,
       'overfull': overfullUnlocked,
+      'market': marketUnlocked,
     },
   };
 
@@ -233,6 +235,7 @@ class Dragon {
     scienceUnlocked = json['unlocked']['science'] ?? false;
     foodUnlocked = json['unlocked']['food'] ?? false;
     overfullUnlocked = json['unlocked']['overfull'] ?? false;
+    marketUnlocked = json['unlocked']['market'] ?? false;
 
     for (var building in unlockedBuildings) {
       for (var i = 0; i < building.owned; i++) {

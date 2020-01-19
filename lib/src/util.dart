@@ -31,3 +31,12 @@ extension PickWeighted<T> on List<Weight<T>> {
     return unweighted.pick(rng);
   }
 }
+
+extension RandomUtils on Random {
+  int nextIntBetween(int lower, int upper) {
+    if (lower > upper) {
+      return nextIntBetween(upper, lower);
+    }
+    return lower + nextInt(upper - lower + 1);
+  }
+}
