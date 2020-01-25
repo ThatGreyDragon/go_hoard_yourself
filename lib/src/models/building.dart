@@ -15,6 +15,7 @@ abstract class Building {
   double get cost => baseCost * pow(factorCost, owned);
 
   void onBought(Dragon dragon) {}
+  void onLoad(Dragon dragon) {}
 
   dynamic toJSON() => {
     'id': id,

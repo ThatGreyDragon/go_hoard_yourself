@@ -237,14 +237,8 @@ class Dragon {
     overfullUnlocked = json['unlocked']['overfull'] ?? false;
     marketUnlocked = json['unlocked']['market'] ?? false;
 
-    for (var building in unlockedBuildings) {
-      for (var i = 0; i < building.owned; i++) {
-        building.onBought(this);
-      }
-    }
-    for (var upgrade in unlockedUpgrades) {
-      upgrade.onUnlock(this);
-    }
+    unlockedBuildings.forEach((b) => b.onLoad(this));
+    unlockedUpgrades.forEach((u) => u.onLoad(this));
 
     for (var entry in weightMilestones.entries.toList()) {
       if (weight >= entry.key) {

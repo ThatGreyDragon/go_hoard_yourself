@@ -44,10 +44,14 @@ class BuildingStomachOil extends Building {
   @override
   void onBought(Dragon dragon) {
     if (owned == 1) {
+      onLoad(dragon);
       dragon.log.add(LogEntry('''You rub the oil onto your scales, and it quickly soaks in, feeling tingly. Wow, you're suddently starving! Your stomach capacity must have been increased...''', LogType.GOOD));
     }
+  }
 
-    dragon.stomachCapacity.flatMods.add(() => 10.0);
+  @override
+  void onLoad(Dragon dragon) {
+    dragon.stomachCapacity.flatMods.add(() => 10.0 * owned);
   }
 }
 
