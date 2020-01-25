@@ -1,4 +1,5 @@
 import 'package:go_hoard_yourself/src/data/tasks.dart';
+import 'package:go_hoard_yourself/src/data/upgrades.dart';
 import 'package:go_hoard_yourself/src/models/building.dart';
 import 'package:go_hoard_yourself/src/models/dragon.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
@@ -74,10 +75,9 @@ class BuildingOldBook extends Building {
   void onBought(Dragon dragon) {
     if (owned == 1) {
       dragon.log.add(LogEntry('''You bought an old book! Now it's time to figure out what this book is about... It's a bit dense, so it'll take some work.''', LogType.GOOD));
-    }
-
-    if (!dragon.unlockedTasks.contains(TASK_STUDY_BOOKS)) {
       dragon.unlockedTasks.add(TASK_STUDY_BOOKS);
+      dragon.unlockableUpgrades.add(UPGRADE_FEEDING);
+      dragon.unlockableUpgrades.add(UPGRADE_TRADING);
     }
   }
 }
