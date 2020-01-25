@@ -233,9 +233,41 @@ class TaskFeed extends Task {
 }
 final TaskFeed TASK_FEED = TaskFeed();
 
+class TaskSell extends Task {
+  Random rng = Random();
+
+  @override
+  String get desc => '''Automatically sell some food you have hoarded up, based on which foods you've enabled to sell off.''';
+
+  @override
+  String get id => 'sell';
+
+  @override
+  String get name => 'Sell Food';
+
+  @override
+  double get timeToComplete => 1.0;
+
+  TaskSell() {
+    maxKoboldsAssignable.flatMods.add(() => double.infinity);
+  }
+
+  @override
+  void onComplete(Dragon dragon) {
+    var foods = FOODS.where((f) => f.owned > 0 && f.sellable).toList();
+    if (foods.isNotEmpty) {
+      var food = foods.pick(rng);
+      food.removeOne(dragon);
+      dragon.gold += food.salePrice;
+    }
+  }
+}
+final TaskSell TASK_SELL = TaskSell();
+
 final List<Task> TASKS = [
   TASK_GATHER,
   TASK_EXPLORE_CAVE,
   TASK_STUDY_BOOKS,
   TASK_FEED,
+  TASK_SELL,
 ];

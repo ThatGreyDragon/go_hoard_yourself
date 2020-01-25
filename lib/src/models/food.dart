@@ -18,12 +18,20 @@ abstract class Food {
   double get size;
   double get fatRatio;
   double get digestionRate;
+  int get salePrice;
 
   int owned = 0;
   bool sellable = false;
   Priority priority = Priority.DO_NOT_EAT;
+  
+  void onEat(Dragon dragon) {
+    dragon.fillStomach(this);
+    removeOne(dragon);
+  }
 
-  void onEat(Dragon dragon);
+  void removeOne(Dragon dragon) {
+    owned--;
+  }
 
   dynamic toJSON() => {
     'id': id,
@@ -51,10 +59,7 @@ class BasicFood extends Food {
   double eatTime, size, fatRatio, digestionRate;
 
   @override
-  void onEat(Dragon dragon) {
-    dragon.fillStomach(this);
-    owned--;
-  }
+  int salePrice;
 
-  BasicFood({this.id, this.name, this.desc, this.eatTime, this.size, this.fatRatio, this.digestionRate});
+  BasicFood({this.id, this.name, this.desc, this.eatTime, this.size, this.fatRatio, this.digestionRate, this.salePrice});
 }

@@ -25,12 +25,8 @@ class FoodKobold extends Food {
   double get size => 20.0;
 
   @override
-  void onEat(Dragon dragon) {
-    // do normal food behavior...
-    dragon.fillStomach(this);
+  void removeOne(Dragon dragon) {
     owned--;
-
-    /// ... but also reduce kobold count
     if (dragon.kobolds < dragon.koboldsInUse) {
       for (var task in dragon.unlockedTasks) {
         if (task.koboldsAssigned > 0) {
@@ -40,6 +36,9 @@ class FoodKobold extends Food {
       }
     }
   }
+
+  @override
+  int get salePrice => 1000;
 }
 
 final FoodKobold FOOD_KOBOLD = FoodKobold();
@@ -52,6 +51,7 @@ final Food FOOD_RABBIT = BasicFood(
   size: 5.0,
   fatRatio: 0.5,
   digestionRate: 1.0,
+  salePrice: 100,
 );
 
 final Food FOOD_DEER = BasicFood(
@@ -62,6 +62,7 @@ final Food FOOD_DEER = BasicFood(
   size: 15.0,
   fatRatio: 0.5,
   digestionRate: 1.0,
+  salePrice: 200,
 );
 
 final List<Food> FOODS = [

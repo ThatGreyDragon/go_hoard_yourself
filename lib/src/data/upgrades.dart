@@ -33,6 +33,11 @@ class UpgradeTrading extends Upgrade {
 
   @override
   String get name => 'Entrepeneurship 101';
+
+  @override
+  void onUnlock(Dragon dragon) {
+    dragon.unlockedTasks.add(TASK_SELL);
+  }
 }
 
 final UpgradeFeeding UPGRADE_FEEDING = UpgradeFeeding();
