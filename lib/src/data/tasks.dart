@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:go_hoard_yourself/src/data/buildings.dart';
+import 'package:go_hoard_yourself/src/models/food.dart';
 import 'package:go_hoard_yourself/src/models/log.dart';
 import 'package:go_hoard_yourself/src/models/popup.dart';
 import 'package:go_hoard_yourself/src/util.dart';
@@ -64,6 +65,7 @@ One particularly long hunt ends with the prey diving into a cave you haven't see
     maxKoboldsAssignable.flatMods.add(() => 5);
   }
 }
+final TaskGather TASK_GATHER = TaskGather();
 
 class TaskExploreCave extends Task {
   @override
@@ -151,9 +153,10 @@ You find some gold coins tucked away in a crevice of the cave. Maybe you can spe
   }
 
   TaskExploreCave() {
-    maxKoboldsAssignable.flatMods.add(() => 5);
+    maxKoboldsAssignable.flatMods.add(() => double.infinity);
   }
 }
+final TaskExploreCave TASK_EXPLORE_CAVE = TaskExploreCave();
 
 class TaskStudyBooks extends Task {
   @override
@@ -186,13 +189,53 @@ As you read the first chapter of this long and dry book, you begin to figure out
   @override
   double get timeToComplete => 3.0;
 }
-
-final TaskGather TASK_GATHER = TaskGather();
-final TaskExploreCave TASK_EXPLORE_CAVE = TaskExploreCave();
 final TaskStudyBooks TASK_STUDY_BOOKS = TaskStudyBooks();
+
+class TaskFeed extends Task {
+  Random rng = Random();
+
+  @override
+  String get desc => '''Automatically rustle up something to eat, based on the priority settings you set in the Food Tab.''';
+
+  @override
+  String get id => 'feed';
+
+  @override
+  String get name => 'Feed';
+
+  @override
+  double get timeToComplete => 1.0;
+
+  TaskFeed() {
+    maxKoboldsAssignable.flatMods.add(() => double.infinity);
+  }
+
+  @override
+  void onComplete(Dragon dragon) {
+    if (dragon.stomachFullPercent >= 1.0) {
+      return;
+    }
+
+    for (var priority in [
+      Priority.VERY_HIGH,
+      Priority.HIGH,
+      Priority.MEDIUM,
+      Priority.LOW,
+      Priority.VERY_LOW
+    ]) {
+      var foods = FOODS.where((f) => f.owned > 0 && f.priority == priority).toList();
+      if (foods.isNotEmpty) {
+        foods.pick(rng).onEat(dragon);
+        break;
+      }
+    }
+  }
+}
+final TaskFeed TASK_FEED = TaskFeed();
 
 final List<Task> TASKS = [
   TASK_GATHER,
   TASK_EXPLORE_CAVE,
   TASK_STUDY_BOOKS,
+  TASK_FEED,
 ];

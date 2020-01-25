@@ -5,6 +5,7 @@ import 'dart:html';
 import 'package:go_hoard_yourself/go_hoard_yourself.dart';
 import 'package:go_hoard_yourself/src/components/common_component.dart';
 import 'package:go_hoard_yourself/src/data/buildings.dart';
+import 'package:go_hoard_yourself/src/data/foods.dart';
 import 'package:go_hoard_yourself/src/data/tasks.dart';
 import 'package:go_hoard_yourself/src/models/dragon.dart';
 import 'package:angular/angular.dart';
@@ -67,6 +68,9 @@ class SettingsComponent extends CommonComponent {
     }
     for (var building in BUILDINGS) {
       building.owned = 0;
+    }
+    for (var food in FOODS) {
+      food.owned = 0;
     }
 
     GoHoardYourself.dragon.log.add(LogEntry('Game reset successfully.'));

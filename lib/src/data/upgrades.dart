@@ -1,3 +1,5 @@
+import 'package:go_hoard_yourself/src/data/tasks.dart';
+import 'package:go_hoard_yourself/src/models/dragon.dart';
 import 'package:go_hoard_yourself/src/models/upgrade.dart';
 
 class UpgradeFeeding extends Upgrade {
@@ -12,6 +14,11 @@ class UpgradeFeeding extends Upgrade {
 
   @override
   int get cost => 1;
+  
+  @override
+  void onUnlock(Dragon dragon) {
+    dragon.unlockedTasks.add(TASK_FEED);
+  }
 }
 
 class UpgradeTrading extends Upgrade {
