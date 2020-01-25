@@ -22,7 +22,7 @@ class TaskGather extends Task {
   String get desc => 'Forage and hunt for something to eat!';
 
   @override
-  double get timeToComplete => 10.0;
+  double get timeToComplete => 1.0;
 
   @override
   void onComplete(Dragon dragon) {
@@ -76,7 +76,7 @@ class TaskExploreCave extends Task {
   String get desc => 'Maybe something good to eat is in there?';
 
   @override
-  double get timeToComplete => 20.0;
+  double get timeToComplete => 2.0;
 
   Random rng = Random();
 
@@ -136,7 +136,7 @@ You find a kobold huddled in the back of the cave. Upon seeing you, they rush to
 You find some gold coins tucked away in a crevice of the cave. Maybe you can spend these somewhere... But where? Maybe the cave has answers yet.
       ''';
 
-      dragon.gold += rng.nextIntBetween(100, 200);
+      dragon.gold += rng.nextIntBetween(1000, 2000);
 
       if (!dragon.goldUnlocked) {
         dragon.log.add(LogEntry(BASE_MESSAGE, LogType.GOOD));
@@ -184,8 +184,7 @@ As you read the first chapter of this long and dry book, you begin to figure out
   }
 
   @override
-  double get timeToComplete => 30.0;
-  
+  double get timeToComplete => 3.0;
 }
 
 final TaskGather TASK_GATHER = TaskGather();
