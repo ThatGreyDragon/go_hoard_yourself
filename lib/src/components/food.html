@@ -11,17 +11,36 @@
 
 <div *ngFor="let entry of dragon.inventory.entries; trackBy: trackByInvetoryLength" #pane (init)="enableTooltips(pane)">
     <div class="card" data-toggle="tooltip" [attr.title]="entry.key.desc">
-        <div class="card-body">
+        <div class="container card-body"><div class="row">
             <button
                 type="button"
-                class="btn"
+                class="col btn"
                 [class.btn-primary]="beingEaten(entry.key)"
                 [class.btn-secondary]="!beingEaten(entry.key)"
                 (click)="onFoodSelected(entry.key)"
             >
                 {{entry.key.name}}
             </button>
-            <i class="fa fa-utensils"></i> {{entry.value}}
-        </div>
+            <div class="col"><i class="fa fa-utensils"></i> {{entry.value}}</div>
+            <div class="col" *ngIf="dragon.feedingUnlocked">
+                <form><div class="form-group">
+                  <label for="priority">Priority:</label>
+                  <select class="form-control" id="priority">
+                    <option>Do Not Eat</option>
+                    <option>Very Low</option>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                    <option>Very High</option>
+                  </select>
+                </div></form>
+            </div>
+            <div class="col" *ngIf="dragon.sellingUnlocked">
+                <form><div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="sell">
+                    <label class="form-check-label" for="sell">Sell?</label>
+                </div></form>
+            </div>
+        </div></div>
     </div>
 </div>

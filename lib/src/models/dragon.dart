@@ -271,4 +271,7 @@ class Dragon {
       PopupComponent.INSTANCE.showPopup();
     }
   }
+
+  bool get feedingUnlocked => unlockedUpgrades.contains(UPGRADE_FEEDING);
+  bool get sellingUnlocked => unlockedUpgrades.contains(UPGRADE_TRADING);
 }
