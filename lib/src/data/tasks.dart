@@ -94,6 +94,21 @@ Tucked away among some gold coins you find... An old map! You manage to make out
       '''));
       dragon.marketUnlocked = true;
       dragon.unlockedBuildings.add(BUILDING_STOMACH_OIL);
+      dragon.unlockedBuildings.add(BUILDING_OLD_BOOK);
+      return;
+    }
+
+    if (dragon.marketUnlocked && !dragon.unlockedBuildings.contains(BUILDING_HUNTING_SHACK) && timesCompleted >= 20) {
+      const BASE_MESSAGE = '''
+You find some old papers lying around in the back of a cavern. Inspecting them further, it seems you have a blueprint on your hands... Ones for a simple building! Considering the fact that your local hunting ground is packed to bursting with kobolds now, something to house more would be perfect for your plans...
+      ''';
+
+      dragon.log.add(LogEntry(BASE_MESSAGE, LogType.GOOD));
+      dragon.showPopup(Popup('Overpopulation woes... Solved?', BASE_MESSAGE + '''
+
+(Some buildings, like the Hunting Shack, can be built at the Market to increase work capcity for certain tasks. Other blueprints can be found through research or other means.)
+      '''));
+      dragon.unlockedBuildings.add(BUILDING_HUNTING_SHACK);
       return;
     }
 
@@ -140,10 +155,45 @@ You find some gold coins tucked away in a crevice of the cave. Maybe you can spe
   }
 }
 
+class TaskStudyBooks extends Task {
+  @override
+  String get desc => '''Pour over the pages of your collection of tomes, discovering facts you might be able to put to use somewhere...''';
+
+  @override
+  String get id => 'study-books';
+
+  @override
+  String get name => 'Study Old Books';
+
+  @override
+  void onComplete(Dragon dragon) {
+    dragon.sciencePoints++;
+
+    if (timesCompleted == 1) {
+      const BASE_MESSAGE = '''
+As you read the first chapter of this long and dry book, you begin to figure out what this whole thing is about. It's a cookbook! It' all about food! Your stomach rumbles as you turn the next page. If you learn enough about it, you can put these recipes to use...
+      ''';
+
+      dragon.log.add(LogEntry(BASE_MESSAGE, LogType.GOOD));
+      dragon.showPopup(Popup('Scientific progress goes... Yum', BASE_MESSAGE + '''
+
+(Studying your books gains you research points. Spend them in the Research Tab to unlock new technologies for you and your kobolds.)
+      '''));
+      dragon.scienceUnlocked = true;
+    }
+  }
+
+  @override
+  double get timeToComplete => 30.0;
+  
+}
+
 final TaskGather TASK_GATHER = TaskGather();
 final TaskExploreCave TASK_EXPLORE_CAVE = TaskExploreCave();
+final TaskStudyBooks TASK_STUDY_BOOKS = TaskStudyBooks();
 
 final List<Task> TASKS = [
   TASK_GATHER,
   TASK_EXPLORE_CAVE,
+  TASK_STUDY_BOOKS,
 ];

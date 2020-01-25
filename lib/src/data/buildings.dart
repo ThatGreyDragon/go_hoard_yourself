@@ -50,10 +50,44 @@ class BuildingStomachOil extends Building {
   }
 }
 
+class BuildingOldBook extends Building {
+  @override
+  double get baseCost => 10000;
+
+  @override
+  String get desc => '''Looks like they're selling dusty old books here at the market. If you bought one, you could probably learn some things from it... If you put in the eoffrt of pouring over it.''';
+
+  @override
+  double get factorCost => 1.2;
+
+  @override
+  String get id => 'old-book';
+
+  @override
+  String get name => 'Old Book';
+
+  BuildingOldBook() {
+    TASK_STUDY_BOOKS.maxKoboldsAssignable.flatMods.add(() => owned*1.0);
+  }
+
+  @override
+  void onBought(Dragon dragon) {
+    if (owned == 1) {
+      dragon.log.add(LogEntry('''You bought an old book! Now it's time to figure out what this book is about... It's a bit dense, so it'll take some work.''', LogType.GOOD));
+    }
+
+    if (!dragon.unlockedTasks.contains(TASK_STUDY_BOOKS)) {
+      dragon.unlockedTasks.add(TASK_STUDY_BOOKS);
+    }
+  }
+}
+
 final BuldingHuntingShack BUILDING_HUNTING_SHACK = BuldingHuntingShack();
 final BuildingStomachOil BUILDING_STOMACH_OIL = BuildingStomachOil();
+final BuildingOldBook BUILDING_OLD_BOOK = BuildingOldBook();
 
 final List<Building> BUILDINGS = [
   BUILDING_HUNTING_SHACK,
   BUILDING_STOMACH_OIL,
+  BUILDING_OLD_BOOK,
 ];
