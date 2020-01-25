@@ -1,4 +1,5 @@
 import 'package:go_hoard_yourself/src/components/common_component.dart';
+import 'package:go_hoard_yourself/src/data/foods.dart';
 import 'package:go_hoard_yourself/src/models/dragon.dart';
 import 'package:angular/angular.dart';
 import 'package:go_hoard_yourself/src/models/food.dart';
@@ -14,7 +15,7 @@ class FoodComponent extends CommonComponent {
   @Input()
   Dragon dragon;
 
-  Object trackByInvetoryLength(_, dynamic o) => dragon.inventory.length;
+  Iterable<Food> get foodUnlocked => FOODS.where((f)=>f.owned > 0);
 
   bool beingEaten(Food food) {
     return dragon.eating == food;
@@ -31,5 +32,9 @@ class FoodComponent extends CommonComponent {
         dragon.eating = food;
       }
     }
+  }
+
+  void onPriorityChange(Food food, int selIndex) {
+    food.priority = Priority.values[selIndex];
   }
 }

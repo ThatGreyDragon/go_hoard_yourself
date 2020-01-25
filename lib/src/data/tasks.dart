@@ -26,10 +26,10 @@ class TaskGather extends Task {
 
   @override
   void onComplete(Dragon dragon) {
-    dragon.giveFood([
+    [
       Weight(5, FOOD_RABBIT),
       Weight(1, FOOD_DEER),
-    ].pickWeighted(rng));
+    ].pickWeighted(rng).owned++;
     dragon.foodUnlocked = true;
 
     if (dragon.workingOn == this) {
@@ -113,7 +113,7 @@ You find some old papers lying around in the back of a cavern. Inspecting them f
     }
 
     if (rng.nextBool()) {
-      dragon.giveFood(FOOD_KOBOLD);
+      FOOD_KOBOLD.owned++;
 
       if (!dragon.koboldsUnlocked) {
         const BASE_MESSAGE = '''

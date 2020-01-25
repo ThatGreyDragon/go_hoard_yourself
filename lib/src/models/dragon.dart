@@ -40,7 +40,6 @@ class StomachFilling {
 
 class Dragon {
   String name;
-  Map<Food,int> inventory = {};
   Set<StomachFilling> stomach = {};
   Stat stomachCapacity = Stat(10.0);
   Stat metabolism = Stat(0.1);
@@ -124,17 +123,12 @@ class Dragon {
     stomach.removeAll(toDelete);
   }
 
-  void giveFood(Food food, [int amount = 1]) {
-    inventory.putIfAbsent(food, () => 0);
-    inventory[food] += amount;
-  }
-
   double get eatingProgressPercent => eatingProgress / (eating?.eatTime ?? 1);
   double get stomachSpaceInUse => stomach.fold(0, (total, filling) => total + filling.amount);
   double get stomachFullPercent => stomachSpaceInUse / stomachCapacity.value;
   bool get overfull => stomachFullPercent > 1;
 
-  int get kobolds => inventory[FOOD_KOBOLD] ?? 0;
+  int get kobolds => FOOD_KOBOLD.owned;
   int get koboldsInUse => unlockedTasks.fold(0, (total, task) => total + task.koboldsAssigned);
 
   void fillStomach(Food food) {
@@ -162,13 +156,6 @@ class Dragon {
     }
   }
 
-  void takeFood(Food food, [int amount = 1]) {
-    var remaining = inventory.update(food, (int i) => i - amount);
-    if (remaining <= 0) {
-      inventory.remove(food);
-    }
-  }
-
   double buildingCost(Building building) => allBuildingCosts.value * building.cost;
   bool affordable(Building building) => gold >= buildingCost(building);
   double upgradeCost(Upgrade upgrade) => allUpgradeCosts.value * upgrade.cost;
@@ -176,9 +163,10 @@ class Dragon {
 
   dynamic toJSON() => {
     'name': name,
-    'inventory': Map.fromEntries(inventory.entries.map(
-      (e) => MapEntry(e.key.id, e.value)
-    )),
+    'inventory': FOODS
+      .where((food) => food.owned > 0)
+      .map((food) => food.toJSON())
+      .toList(),
     'stomach': stomach.map((filling) => filling.toJSON()).toList(),
     'weight': weight,
     'eatingProgress': eatingProgress,
@@ -204,10 +192,10 @@ class Dragon {
   Dragon.fromJSON(dynamic json) {
     _init();
 
+    FOODS.forEach((food) => food.owned = 0);
+    (json['inventory'] as List).forEach((f) => Food.fromJSON(f));
+
     name = json['name'];
-    inventory = Map.fromEntries((json['inventory'] as Map).entries.map(
-      (e) => MapEntry<Food, int>(Food.fromID(e.key), e.value)
-    ));
     stomach = (json['stomach'] as List).map((f) => StomachFilling.fromJSON(f)).toSet();
     weight = json['weight'];
     eatingProgress = json['eatingProgress'];

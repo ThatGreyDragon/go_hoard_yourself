@@ -28,7 +28,7 @@ class FoodKobold extends Food {
   void onEat(Dragon dragon) {
     // do normal food behavior...
     dragon.fillStomach(this);
-    dragon.takeFood(this);
+    owned--;
 
     /// ... but also reduce kobold count
     if (dragon.kobolds < dragon.koboldsInUse) {
